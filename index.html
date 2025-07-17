@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         /* Custom styles for typography and theme */
@@ -28,8 +28,8 @@
             height: 100%;
             z-index: -1; /* Place it behind everything */
         }
-        .font-display {
-            font-family: 'Anton', sans-serif;
+        .font-black {
+            font-weight: 900;
         }
         .project-section {
             min-height: 100vh;
@@ -115,7 +115,7 @@
             content: '_';
             display: inline;
             animation: blink 1s infinite;
-            font-weight: 400; /* Match Anton's weight */
+            font-weight: 900; /* Match headline weight */
         }
 
         @keyframes blink {
@@ -177,7 +177,7 @@
                 <div class="container mx-auto px-6">
                     <div class="flex flex-col md:flex-row items-center md:items-end justify-between gap-8 md:gap-12">
                         <div class="w-full md:w-3/4 text-center md:text-left">
-                            <h1 id="typewriter" class="font-display text-6xl sm:text-7xl md:text-9xl text-white uppercase tracking-wider leading-none">
+                            <h1 id="typewriter" class="font-black text-6xl sm:text-7xl md:text-9xl text-white uppercase tracking-tighter leading-none">
                                 <!-- Populated by JS -->
                             </h1>
                         </div>
