@@ -178,7 +178,7 @@
                     <div class="flex flex-col md:flex-row items-center md:items-end justify-between gap-8 md:gap-12">
                         <div class="w-full md:w-3/4 text-center md:text-left">
                             <h1 id="typewriter" class="text-6xl sm:text-7xl md:text-9xl font-black text-white uppercase tracking-tighter leading-none">
-                                Hi, Im Nirmal.
+                                <!-- Populated by JS -->
                             </h1>
                         </div>
                         <div class="w-full md:w-1/4 md:mb-2 text-center md:text-left">
@@ -476,28 +476,46 @@
             // --- TYPEWRITER EFFECT ---
             const typewriterElement = document.getElementById('typewriter');
             const bioParagraph = document.getElementById('hero-bio');
-            const textToType = typewriterElement.textContent.trim();
+            const linesToType = ["Hi, Im", "Nirmal."]; // The lines to be typed
+
             typewriterElement.textContent = ''; // Clear original text
             bioParagraph.style.opacity = '0'; // Hide bio initially
             bioParagraph.style.transition = 'opacity 0.5s ease-in-out 0.3s'; // Add delay
 
-            function typeWriter(text, i, callback) {
-                if (i < text.length) {
-                    typewriterElement.innerHTML = text.substring(0, i + 1) + '<span class="typing-cursor">_</span>';
-                    setTimeout(() => typeWriter(text, i + 1, callback), 120); // Adjust speed here
+            let lineIndex = 0;
+            let charIndex = 0;
+
+            function type() {
+                if (lineIndex >= linesToType.length) {
+                    // Finished all lines
+                    typewriterElement.innerHTML = linesToType.join('<br>'); // Set final HTML without cursor
+                    bioParagraph.style.opacity = '1'; // Fade in bio
+                    return;
+                }
+
+                const currentLine = linesToType[lineIndex];
+                if (charIndex < currentLine.length) {
+                    // Build the content so far
+                    let content = '';
+                    for (let i = 0; i < lineIndex; i++) {
+                        content += linesToType[i] + '<br>';
+                    }
+                    content += currentLine.substring(0, charIndex + 1);
+
+                    typewriterElement.innerHTML = content + '<span class="typing-cursor">_</span>';
+                    charIndex++;
+                    setTimeout(type, 120);
                 } else {
-                    typewriterElement.innerHTML = text; // Remove cursor at the end
-                    if (callback) callback();
+                    // Finished a line, move to the next
+                    lineIndex++;
+                    charIndex = 0;
+                    // Add a pause between lines
+                    setTimeout(type, 300);
                 }
             }
 
             // Start the animation after a short delay
-            setTimeout(() => {
-                typeWriter(textToType, 0, () => {
-                    // Fade in bio after typing is complete
-                    bioParagraph.style.opacity = '1';
-                });
-            }, 500);
+            setTimeout(type, 500);
 
 
             // --- WAVY DOTS BACKGROUND ANIMATION WITH PHYSICS-BASED CURSOR INTERACTION ---
