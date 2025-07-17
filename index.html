@@ -13,8 +13,8 @@
         /* Custom styles for typography and theme */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FFFFFF; /* Default light background */
-            color: #6d28d9; /* Custom darker bluish-purple text */
+            background-color: #111111; /* Default dark background */
+            color: #e5e7eb; /* Light gray text */
             overflow-x: hidden;
             /* Added for seamless color transition */
             transition: background-color 0.6s ease-in-out;
@@ -89,7 +89,7 @@
             left: -100px;
             pointer-events: none;
             z-index: 9999;
-            background-color: #6d28d9;
+            background-color: white;
             mix-blend-mode: difference;
             transition: transform 0.2s ease-out;
         }
@@ -152,46 +152,46 @@
         <header class="fixed top-0 left-0 right-0 z-50">
             <div class="container mx-auto px-6 py-4">
                 <div class="flex items-center justify-between">
-                    <a href="#" class="text-2xl font-bold text-[#6d28d9]">N.</a>
+                    <a href="#" class="text-2xl font-bold text-white">N.</a>
                     <nav class="hidden md:flex items-center space-x-8">
-                        <a href="#work" class="text-gray-500 hover:text-[#6d28d9] transition-colors">Work</a>
-                        <a href="#about" class="text-gray-500 hover:text-[#6d28d9] transition-colors">About</a>
-                        <a href="#contact" class="text-gray-500 hover:text-[#6d28d9] transition-colors">Contact</a>
+                        <a href="#work" class="text-white hover:opacity-75 transition-opacity">Work</a>
+                        <a href="#about" class="text-white hover:opacity-75 transition-opacity">About</a>
+                        <a href="#contact" class="text-white hover:opacity-75 transition-opacity">Contact</a>
                     </nav>
-                    <button id="mobile-menu-button" class="md:hidden text-[#6d28d9] z-50">
+                    <button id="mobile-menu-button" class="md:hidden text-white z-50">
                          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
             </div>
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center">
-                <a href="#work" class="block py-4 text-2xl text-gray-600 hover:text-[#6d28d9]">Work</a>
-                <a href="#about" class="block py-4 text-2xl text-gray-600 hover:text-[#6d28d9]">About</a>
-                <a href="#contact" class="block py-4 text-2xl text-gray-600 hover:text-[#6d28d9]">Contact</a>
+            <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-black/90 backdrop-blur-sm flex flex-col items-center justify-center">
+                <a href="#work" class="block py-4 text-2xl text-gray-300 hover:text-white">Work</a>
+                <a href="#about" class="block py-4 text-2xl text-gray-300 hover:text-white">About</a>
+                <a href="#contact" class="block py-4 text-2xl text-gray-300 hover:text-white">Contact</a>
             </div>
         </header>
 
         <!-- Main Content -->
         <main>
             <!-- Hero Section -->
-            <section id="hero" class="color-trigger-section" data-bg-color="#FFFFFF">
+            <section id="hero" class="color-trigger-section" data-bg-color="#111111">
                 <div class="container mx-auto px-6 h-full flex flex-col justify-center">
                     <div class="flex-grow flex items-center">
                         <div class="w-full flex flex-col md:flex-row items-center md:items-end justify-between gap-8 md:gap-12">
                             <div class="w-full md:w-3/4 text-center md:text-left">
-                                <h1 id="typewriter" class="font-black text-7xl sm:text-8xl md:text-[10rem] text-[#6d28d9] uppercase tracking-tighter leading-none">
+                                <h1 id="typewriter" class="font-black text-7xl sm:text-8xl md:text-[10rem] text-white uppercase tracking-tighter leading-none">
                                     <!-- Populated by JS -->
                                 </h1>
                             </div>
                             <div class="w-full md:w-1/4 md:mb-2 text-center md:text-left">
-                                 <p id="hero-bio" class="text-xl md:text-2xl text-gray-600">
+                                 <p id="hero-bio" class="text-xl md:text-2xl text-gray-400">
                                     I’m a graphic designer passionate about creating visuals that communicate and captivate.
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <div class="w-full text-center pb-12">
-                        <a href="#work" class="inline-flex flex-col items-center text-[#6d28d9] opacity-75 hover:opacity-100 transition-opacity">
+                    <div class="absolute bottom-0 left-0 right-0 w-full text-center pb-16">
+                        <a href="#work" class="inline-flex flex-col items-center text-white opacity-75 hover:opacity-100 transition-opacity">
                             <span class="mb-2">Explore my work</span>
                             <div class="animate-bounce-slow">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -259,7 +259,7 @@
             </section>
 
             <!-- About Me Section -->
-            <section id="about" class="color-trigger-section py-20 bg-white" data-bg-color="#FFFFFF">
+            <section id="about" class="color-trigger-section py-20 bg-black" data-bg-color="#000000">
                 <div class="container mx-auto px-6">
                     <div class="flex flex-col md:flex-row items-center gap-12">
                         <div class="w-full md:w-1/2" data-aos="fade-up" data-aos-delay="200">
@@ -267,16 +267,16 @@
                         </div>
                         <div class="w-full md:w-1/2 space-y-8 mt-12 md:mt-0" data-aos="fade-up">
                             <div>
-                                <h4 class="font-semibold text-gray-500 mb-2">About</h4>
-                                <p class="text-[#6d28d9] leading-relaxed">I'm Nirmal. Multi-disciplinary designer based in Dubai. Currently designing beautiful experiences at Google. When I'm not designing stuff you can catch me watching my son's soccer practice, playing Magic: The Gathering, or being disappointed with the Washington Commanders.</p>
+                                <h4 class="font-semibold text-gray-400 mb-2">About</h4>
+                                <p class="text-gray-300 leading-relaxed">I'm Nirmal. Multi-disciplinary designer based in Dubai. Currently designing beautiful experiences at Google. When I'm not designing stuff you can catch me watching my son's soccer practice, playing Magic: The Gathering, or being disappointed with the Washington Commanders.</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-gray-500 mb-2">Current</h4>
-                                <p class="text-[#6d28d9]">Staff Visual Designer at Google</p>
+                                <h4 class="font-semibold text-gray-400 mb-2">Current</h4>
+                                <p class="text-gray-300">Staff Visual Designer at Google</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-gray-500 mb-2">Previous</h4>
-                                <ul class="text-[#6d28d9] space-y-1">
+                                <h4 class="font-semibold text-gray-400 mb-2">Previous</h4>
+                                <ul class="text-gray-300 space-y-1">
                                     <li>Senior Designer at Grow</li>
                                     <li>Art Direction at Ciniva Web Agency</li>
                                     <li>Art Direction & Design at Leesa Sleep</li>
@@ -284,7 +284,7 @@
                                 </ul>
                             </div>
                              <div class="pt-4">
-                                <a href="#contact" class="inline-block bg-[#6d28d9] text-white font-semibold px-8 py-3 rounded-full hover:bg-opacity-90 transition-colors">Say Hello</a>
+                                <a href="#contact" class="inline-block bg-white text-black font-semibold px-8 py-3 rounded-full hover:bg-gray-200 transition-colors">Say Hello</a>
                             </div>
                         </div>
                     </div>
@@ -292,23 +292,23 @@
             </section>
 
             <!-- Contact Section -->
-            <section id="contact" class="color-trigger-section py-20" data-bg-color="#FFFFFF">
+            <section id="contact" class="color-trigger-section py-20" data-bg-color="#111111">
                 <div class="container mx-auto px-6 text-center" data-aos="zoom-in">
-                    <h2 class="text-4xl sm:text-5xl md:text-7xl font-bold text-[#6d28d9]">Let's work together.</h2>
-                    <p class="mt-4 text-xl sm:text-2xl text-gray-600 hover:text-[#6d28d9] transition-colors"><a href="mailto:hello@nirmal.com">hello@nirmal.com</a></p>
+                    <h2 class="text-4xl sm:text-5xl md:text-7xl font-bold text-white">Let's work together.</h2>
+                    <p class="mt-4 text-xl sm:text-2xl text-gray-400 hover:text-indigo-400 transition-colors"><a href="mailto:hello@nirmal.com">hello@nirmal.com</a></p>
                 </div>
             </section>
         </main>
 
         <!-- Footer -->
-        <footer class="bg-gray-100 text-black">
-            <div class="container mx-auto px-6 py-12">
+        <footer class="bg-black text-white">
+            <div class="container mx-auto px-6 py-8">
                 <div class="flex flex-col md:flex-row items-center justify-between">
-                    <p class="text-xl text-gray-600">&copy; 2025 Nirmal</p>
-                    <div class="flex mt-4 md:mt-0 space-x-6 text-xl">
-                        <a href="#" class="text-gray-600 hover:text-[#6d28d9] transition-colors">Twitter</a>
-                        <a href="#" class="text-gray-600 hover:text-[#6d28d9] transition-colors">Instagram</a>
-                        <a href="#" class="text-gray-600 hover:text-[#6d28d9] transition-colors">Dribbble</a>
+                    <p class="text-lg text-gray-400">&copy; 2025 Nirmal</p>
+                    <div class="flex mt-4 md:mt-0 space-x-6 text-lg">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Twitter</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Instagram</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Dribbble</a>
                     </div>
                 </div>
             </div>
@@ -318,7 +318,7 @@
     <!-- This div is for the separate project page view -->
     <div id="project-detail-view" class="page hidden">
         <!-- Project Page Header -->
-        <header class="fixed top-0 left-0 right-0 z-50">
+        <header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
             <div class="container mx-auto px-6 py-4">
                 <div class="flex items-center justify-between">
                     <a href="#" id="project-back-link" class="text-2xl font-bold text-white">N.</a>
@@ -628,7 +628,7 @@
 
                     ctx.beginPath();
                     ctx.arc(point.x, point.y, 1.5, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(109, 40, 217, ${opacity})`; // Changed to darker bluish-purple dots
+                    ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
                     ctx.fill();
                 });
 
