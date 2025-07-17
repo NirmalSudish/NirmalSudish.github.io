@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jane Doe | Graphic Designer & Illustrator</title>
+    <title>Nirmal | Graphic Designer & Illustrator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,23 +79,52 @@
              position: relative;
              z-index: 1;
         }
-        /* Custom Magnifying Cursor */
+        /* Custom Glass Cursor */
         #glass-cursor {
             position: fixed;
             width: 40px;
             height: 40px;
-            border: 2px solid white;
             border-radius: 50%;
             top: -100px; 
             left: -100px;
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%) scale(1);
-            transition: transform 0.2s ease-out;
-            background: transparent;
+            transition: transform 0.2s ease-out, width 0.2s ease-out, height 0.2s ease-out;
+
+            /* Glass Effect */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+
+            /* Refraction Illusion */
+            box-shadow: 
+                inset 0 0 10px rgba(255, 255, 255, 0.1), /* Inner highlight */
+                0 0 20px rgba(0, 0, 0, 0.2); /* Outer shadow for depth */
+            
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         #glass-cursor.hover {
             transform: translate(-50%, -50%) scale(1.8); /* Magnify on hover */
+             box-shadow: 
+                inset 0 0 15px rgba(255, 255, 255, 0.2),
+                0 0 30px rgba(0, 0, 0, 0.3);
+        }
+        /* Typewriter effect */
+        .typing-cursor::after {
+            content: '_';
+            display: inline;
+            animation: blink 1s infinite;
+            font-weight: 900; /* Match headline weight */
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
         }
         /* Hide custom cursor on touch devices */
         @media (pointer: coarse) {
@@ -122,7 +151,7 @@
         <header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
             <div class="container mx-auto px-6 py-4">
                 <div class="flex items-center justify-between">
-                    <a href="#" class="text-2xl font-bold text-white">JD.</a>
+                    <a href="#" class="text-2xl font-bold text-white">N.</a>
                     <nav class="hidden md:flex items-center space-x-8">
                         <a href="#work" class="text-white hover:opacity-75 transition-opacity">Work</a>
                         <a href="#about" class="text-white hover:opacity-75 transition-opacity">About</a>
@@ -147,14 +176,14 @@
             <section id="hero" class="color-trigger-section" data-bg-color="#111111">
                 <div class="container mx-auto px-6">
                     <div class="flex flex-col md:flex-row items-center md:items-end justify-between gap-8 md:gap-12">
-                        <div class="w-full md:w-3/4 text-center md:text-left" data-aos="fade-up">
-                            <h1 class="text-6xl sm:text-7xl md:text-9xl font-black text-white uppercase tracking-tighter leading-none">
-                                Oh Hey There.
+                        <div class="w-full md:w-3/4 text-center md:text-left">
+                            <h1 id="typewriter" class="text-6xl sm:text-7xl md:text-9xl font-black text-white uppercase tracking-tighter leading-none">
+                                Hi, Im Nirmal.
                             </h1>
                         </div>
-                        <div class="w-full md:w-1/4 md:mb-2 text-center md:text-left" data-aos="fade-up" data-aos-delay="200">
-                             <p class="text-lg text-gray-400">
-                                I'm Jane Doe. Multidisciplinary designer based in Dubai. Currently designing beautiful experiences and bringing ideas to life.
+                        <div class="w-full md:w-1/4 md:mb-2 text-center md:text-left">
+                             <p id="hero-bio" class="text-lg text-gray-400">
+                                I’m a graphic designer passionate about creating visuals that communicate and captivate.
                             </p>
                         </div>
                     </div>
@@ -226,7 +255,7 @@
                         <div class="w-full md:w-1/2 space-y-8 mt-12 md:mt-0" data-aos="fade-up">
                             <div>
                                 <h4 class="font-semibold text-gray-400 mb-2">About</h4>
-                                <p class="text-gray-300 leading-relaxed">I'm Jane Doe. Multi-disciplinary designer based in Dubai. Currently designing beautiful experiences at Google. When I'm not designing stuff you can catch me watching my son's soccer practice, playing Magic: The Gathering, or being disappointed with the Washington Commanders.</p>
+                                <p class="text-gray-300 leading-relaxed">I'm Nirmal. Multi-disciplinary designer based in Dubai. Currently designing beautiful experiences at Google. When I'm not designing stuff you can catch me watching my son's soccer practice, playing Magic: The Gathering, or being disappointed with the Washington Commanders.</p>
                             </div>
                             <div>
                                 <h4 class="font-semibold text-gray-400 mb-2">Current</h4>
@@ -253,7 +282,7 @@
             <section id="contact" class="color-trigger-section py-20" data-bg-color="#111111">
                 <div class="container mx-auto px-6 text-center" data-aos="zoom-in">
                     <h2 class="text-4xl sm:text-5xl md:text-7xl font-bold text-white">Let's work together.</h2>
-                    <p class="mt-4 text-xl sm:text-2xl text-gray-400 hover:text-indigo-400 transition-colors"><a href="mailto:hello@janedoe.com">hello@janedoe.com</a></p>
+                    <p class="mt-4 text-xl sm:text-2xl text-gray-400 hover:text-indigo-400 transition-colors"><a href="mailto:hello@nirmal.com">hello@nirmal.com</a></p>
                 </div>
             </section>
         </main>
@@ -261,7 +290,7 @@
         <!-- Footer -->
         <footer class="bg-black text-white">
             <div class="container mx-auto px-6 py-8">
-                <p class="text-center text-gray-500">&copy; 2025 Jane Doe</p>
+                <p class="text-center text-gray-500">&copy; 2025 Nirmal</p>
             </div>
         </footer>
     </div>
@@ -272,7 +301,7 @@
         <header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
             <div class="container mx-auto px-6 py-4">
                 <div class="flex items-center justify-between">
-                    <a href="#" id="project-back-link" class="text-2xl font-bold text-white">JD.</a>
+                    <a href="#" id="project-back-link" class="text-2xl font-bold text-white">N.</a>
                     <button id="close-project-button" class="text-white">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
@@ -443,6 +472,33 @@
                     }
                 });
             });
+
+            // --- TYPEWRITER EFFECT ---
+            const typewriterElement = document.getElementById('typewriter');
+            const bioParagraph = document.getElementById('hero-bio');
+            const textToType = typewriterElement.textContent.trim();
+            typewriterElement.textContent = ''; // Clear original text
+            bioParagraph.style.opacity = '0'; // Hide bio initially
+            bioParagraph.style.transition = 'opacity 0.5s ease-in-out 0.3s'; // Add delay
+
+            function typeWriter(text, i, callback) {
+                if (i < text.length) {
+                    typewriterElement.innerHTML = text.substring(0, i + 1) + '<span class="typing-cursor">_</span>';
+                    setTimeout(() => typeWriter(text, i + 1, callback), 120); // Adjust speed here
+                } else {
+                    typewriterElement.innerHTML = text; // Remove cursor at the end
+                    if (callback) callback();
+                }
+            }
+
+            // Start the animation after a short delay
+            setTimeout(() => {
+                typeWriter(textToType, 0, () => {
+                    // Fade in bio after typing is complete
+                    bioParagraph.style.opacity = '1';
+                });
+            }, 500);
+
 
             // --- WAVY DOTS BACKGROUND ANIMATION WITH PHYSICS-BASED CURSOR INTERACTION ---
             const canvas = document.getElementById('motion-background');
