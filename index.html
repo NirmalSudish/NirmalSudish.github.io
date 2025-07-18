@@ -79,36 +79,23 @@
              position: relative;
              z-index: 1;
         }
-        /* Custom Glass Cursor */
+        /* Custom Inverting Cursor */
         #glass-cursor {
             position: fixed;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             top: -100px; 
             left: -100px;
             pointer-events: none;
             z-index: 9999;
-            transform: translate(-50%, -50%) scale(1);
-            transition: transform 0.2s ease-out, width 0.2s ease-out, height 0.2s ease-out;
-
-            /* Glass Effect */
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-
-            /* Refraction Illusion */
-            box-shadow: 
-                inset 0 0 10px rgba(255, 255, 255, 0.1), /* Inner highlight */
-                0 0 20px rgba(0, 0, 0, 0.2); /* Outer shadow for depth */
-            
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: white;
+            mix-blend-mode: difference;
+            transition: transform 0.2s ease-out;
+            transform: translate(-50%, -50%);
         }
         #glass-cursor.hover {
-            transform: translate(-50%, -50%) scale(1.8); /* Magnify on hover */
-             box-shadow: 
-                inset 0 0 15px rgba(255, 255, 255, 0.2),
-                0 0 30px rgba(0, 0, 0, 0.3);
+            transform: translate(-50%, -50%) scale(1.8);
         }
         /* Typewriter effect */
         .typing-cursor::after {
@@ -163,7 +150,7 @@
     <!-- This div wraps the main homepage content -->
     <div id="home-page" class="page">
         <!-- Header & Navigation -->
-        <header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
+        <header class="fixed top-0 left-0 right-0 z-50">
             <div class="container mx-auto px-6 py-4">
                 <div class="flex items-center justify-between">
                     <a href="#" class="text-2xl font-bold text-white">N.</a>
@@ -193,8 +180,8 @@
                     <div class="flex-grow flex items-center">
                         <div class="w-full flex flex-col md:flex-row items-center md:items-end justify-between gap-8 md:gap-12">
                             <div class="w-full md:w-3/4 text-center md:text-left">
-                                <h1 id="typewriter" class="font-black text-8xl sm:text-9xl md:text-[12rem] text-white uppercase tracking-tighter leading-none">
-                                    Hi, Im Nirmal.
+                                <h1 id="typewriter" class="font-black text-7xl sm:text-8xl md:text-[10rem] text-white uppercase tracking-tighter leading-none">
+                                    <!-- Populated by JS -->
                                 </h1>
                             </div>
                             <div class="w-full md:w-1/4 md:mb-2 text-center md:text-left">
@@ -204,7 +191,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="absolute bottom-0 left-0 right-0 w-full text-center pb-16">
+                    <div class="absolute bottom-0 left-0 right-0 w-full text-center pb-16 z-10">
                         <a href="#work" class="inline-flex flex-col items-center text-white opacity-75 hover:opacity-100 transition-opacity">
                             <span class="mb-2">Explore my work</span>
                             <div class="animate-bounce-slow">
@@ -231,7 +218,7 @@
                                 <p>Year: 2024</p>
                             </div>
                             <div class="w-full md:w-3/4 mt-8 md:mt-0 overflow-hidden rounded-lg shadow-2xl" data-aos="fade-left" data-aos-delay="200">
-                                <img src="https://images.unsplash.com/photo-1635863138233-228a171d5a4a?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Abstract 3D shapes" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105">
+                                <img src="https://images.unsplash.com/photo-1635863138233-228a171d5a4a?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Abstract 3D shapes" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-102">
                             </div>
                         </div>
                     </div>
@@ -248,7 +235,7 @@
                                 <p>Year: 2023</p>
                             </div>
                             <div class="w-full md:w-3/4 mt-8 md:mt-0 overflow-hidden rounded-lg shadow-2xl" data-aos="fade-left" data-aos-delay="200">
-                                 <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Stylish sneakers" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105">
+                                 <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Stylish sneakers" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-102">
                             </div>
                         </div>
                     </div>
@@ -265,7 +252,7 @@
                                 <p>Year: 2023</p>
                             </div>
                             <div class="w-full md:w-3/4 mt-8 md:mt-0 overflow-hidden rounded-lg shadow-2xl" data-aos="fade-left" data-aos-delay="200">
-                                 <img src="https://images.unsplash.com/photo-1507208773393-40d9fc670c58?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Colorful abstract light trails" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105">
+                                 <img src="https://images.unsplash.com/photo-1507208773393-40d9fc670c58?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Colorful abstract light trails" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-102">
                             </div>
                         </div>
                     </div>
@@ -273,7 +260,7 @@
             </section>
 
             <!-- About Me Section -->
-            <section id="about" class="color-trigger-section py-20 bg-black" data-bg-color="#000000">
+            <section id="about" class="color-trigger-section py-20" data-bg-color="#000000">
                 <div class="container mx-auto px-6">
                     <div class="flex flex-col md:flex-row items-center gap-12">
                         <div class="w-full md:w-1/2" data-aos="fade-up" data-aos-delay="200">
@@ -422,7 +409,7 @@
                 `;
                 
                 // Set background color for the detail page
-                projectDetailPage.style.backgroundColor = project.bgColor;
+                body.style.backgroundColor = project.bgColor;
 
                 // Hide home and show project page
                 homePage.classList.add('hidden');
