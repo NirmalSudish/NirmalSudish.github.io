@@ -38,7 +38,7 @@
             justify-content: center;
             padding: 5rem 1.5rem;
             overflow-x: hidden;
-            /* cursor: pointer; */ /* Replaced by custom cursor */
+            cursor: pointer; 
             transition: opacity 0.3s ease-in-out;
             background-color: transparent; /* Made transparent to let body color show through */
             position: relative; /* Needed for z-index to work with content */
@@ -66,10 +66,7 @@
             overflow-y: auto; /* Allow scrolling on project page */
         }
         .project-detail-content {
-             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+             padding: 4rem 0; /* Adjusted padding for full-width content */
         }
         /* A general section class for color triggering */
         .color-trigger-section {
@@ -141,30 +138,25 @@
 </head>
 <body class="antialiased">
     
-    <!-- Custom Cursor Element -->
     <div id="glass-cursor"></div>
 
-    <!-- Canvas for motion background -->
     <canvas id="motion-background"></canvas>
 
-    <!-- This div wraps the main homepage content -->
     <div id="home-page" class="page">
-        <!-- Header & Navigation -->
         <header class="fixed top-0 left-0 right-0 z-50">
             <div class="container mx-auto px-6 py-4">
                 <div class="flex items-center justify-between">
-                    <a href="#" class="text-2xl font-bold text-white">N.</a>
+                    <a href="#hero" class="text-2xl font-bold text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white rounded-sm">N.</a>
                     <nav class="hidden md:flex items-center space-x-8">
-                        <a href="#work" class="text-white hover:opacity-75 transition-opacity">Work</a>
-                        <a href="#about" class="text-white hover:opacity-75 transition-opacity">About</a>
-                        <a href="#contact" class="text-white hover:opacity-75 transition-opacity">Contact</a>
+                        <a href="#work" class="text-white hover:opacity-75 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white rounded-sm">Work</a>
+                        <a href="#about" class="text-white hover:opacity-75 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white rounded-sm">About</a>
+                        <a href="#contact" class="text-white hover:opacity-75 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white rounded-sm">Contact</a>
                     </nav>
-                    <button id="mobile-menu-button" class="md:hidden text-white z-50">
+                    <button id="mobile-menu-button" class="md:hidden text-white z-50" aria-label="Open navigation menu">
                          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
             </div>
-            <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-black/90 backdrop-blur-sm flex flex-col items-center justify-center">
                 <a href="#work" class="block py-4 text-2xl text-gray-300 hover:text-white">Work</a>
                 <a href="#about" class="block py-4 text-2xl text-gray-300 hover:text-white">About</a>
@@ -172,22 +164,19 @@
             </div>
         </header>
 
-        <!-- Main Content -->
         <main>
-            <!-- Hero Section -->
             <section id="hero" class="color-trigger-section" data-bg-color="#111111">
                 <div class="container mx-auto px-6 h-full flex flex-col justify-center">
                     <div class="flex-grow flex items-center">
                         <div class="w-full flex flex-col md:flex-row items-center md:items-end justify-between gap-8 md:gap-12">
                             <div class="w-full md:w-3/4 text-center md:text-left">
                                 <h1 id="typewriter" class="font-black text-7xl sm:text-8xl md:text-[10rem] text-white uppercase tracking-tighter leading-none">
-                                    <!-- Populated by JS -->
-                                </h1>
+                                    </h1>
                             </div>
                             <div class="w-full md:w-1/4 md:mb-2 text-center md:text-left">
                                  <p id="hero-bio" class="text-xl md:text-2xl text-gray-400">
-                                    I’m a graphic designer passionate about creating visuals that communicate and captivate.
-                                </p>
+                                     I’m a graphic designer passionate about creating visuals that communicate and captivate.
+                                 </p>
                             </div>
                         </div>
                     </div>
@@ -204,67 +193,60 @@
                 </div>
             </section>
 
-            <!-- Featured Work Section -->
             <section id="work">
-                <!-- Project 1 -->
-                <div class="project-section color-trigger-section group" data-project-id="0" data-bg-color="#3B82F6"> <!-- Blue-500 -->
+                <div class="project-section color-trigger-section group" data-project-id="0" data-bg-color="#465d2f">
                     <div class="container mx-auto px-6">
                         <div class="flex flex-col md:flex-row items-center gap-8 text-white">
                             <div class="w-full md:w-1/4 space-y-2 text-center md:text-left" data-aos="fade-right">
-                                <h3 class="text-2xl font-bold">Client: Google</h3>
-                                <p>Project: Immersive Demo</p>
-                                <p>Role: 3D / UX-UI Design</p>
-                                <p>Agency: Grow</p>
-                                <p>Year: 2024</p>
+                                <h3 class="text-4xl font-bold">Kaapi District</h3>
+                                <p class="text-sm">Role: Art direction, Design, Web design</p>
+                                <p class="text-sm">Year: 2022</p>
                             </div>
                             <div class="w-full md:w-3/4 mt-8 md:mt-0 overflow-hidden rounded-lg shadow-2xl" data-aos="fade-left" data-aos-delay="200">
-                                <img src="https://images.unsplash.com/photo-1635863138233-228a171d5a4a?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Abstract 3D shapes" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-102">
+                                <img src="images/kaapi_homepage.jpg" alt="Kaapi District Homepage" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105">
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Project 2 -->
-                <div class="project-section color-trigger-section group" data-project-id="1" data-bg-color="#8B5CF6"> <!-- Violet-500 -->
-                     <div class="container mx-auto px-6">
+                <div class="project-section color-trigger-section group" data-project-id="1" data-bg-color="#394b72">
+                    <div class="container mx-auto px-6">
                         <div class="flex flex-col md:flex-row items-center gap-8 text-white">
                             <div class="w-full md:w-1/4 space-y-2 text-center md:text-left" data-aos="fade-right">
-                                <h3 class="text-2xl font-bold">Client: Nike</h3>
-                                <p>Project: Air Max Campaign</p>
-                                <p>Role: Art Direction / Branding</p>
-                                <p>Agency: In-house</p>
-                                <p>Year: 2023</p>
+                                <h3 class="text-4xl font-bold">Client: Northern Escape</h3>
+                                <p class="text-sm">Project: Air Max Campaign</p>
+                                <p class="text-sm">Role: Art Direction / Branding</p>
+                                <p class="text-sm">Agency: In-house</p>
+                                <p class="text-sm">Year: 2023</p>
                             </div>
                             <div class="w-full md:w-3/4 mt-8 md:mt-0 overflow-hidden rounded-lg shadow-2xl" data-aos="fade-left" data-aos-delay="200">
-                                 <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Stylish sneakers" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-102">
+                                <img src="images/northern-escpe.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Stylish sneakers" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" loading="lazy">
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Project 3 -->
-                <div class="project-section color-trigger-section group" data-project-id="2" data-bg-color="#EC4899"> <!-- Pink-500 -->
-                     <div class="container mx-auto px-6">
+                <div class="project-section color-trigger-section group" data-project-id="2" data-bg-color="#EC4899">
+                    <div class="container mx-auto px-6">
                         <div class="flex flex-col md:flex-row items-center gap-8 text-white">
                             <div class="w-full md:w-1/4 space-y-2 text-center md:text-left" data-aos="fade-right">
-                                <h3 class="text-2xl font-bold">Client: Spotify</h3>
-                                <p>Project: Wrapped 2023</p>
-                                <p>Role: Illustration / Motion Design</p>
-                                <p>Agency: COLLINS</p>
-                                <p>Year: 2023</p>
+                                <h3 class="text-4xl font-bold">Client: Spotify</h3>
+                                <p class="text-sm">Project: Wrapped 2023</p>
+                                <p class="text-sm">Role: Illustration / Motion Design</p>
+                                <p class="text-sm">Agency: COLLINS</p>
+                                <p class="text-sm">Year: 2023</p>
                             </div>
                             <div class="w-full md:w-3/4 mt-8 md:mt-0 overflow-hidden rounded-lg shadow-2xl" data-aos="fade-left" data-aos-delay="200">
-                                 <img src="https://images.unsplash.com/photo-1507208773393-40d9fc670c58?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Colorful abstract light trails" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-102">
+                                <img src="https://images.unsplash.com/photo-1507208773393-40d9fc670c58?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Colorful abstract light trails" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" loading="lazy">
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- About Me Section -->
             <section id="about" class="color-trigger-section py-20" data-bg-color="#000000">
                 <div class="container mx-auto px-6">
                     <div class="flex flex-col md:flex-row items-center gap-12">
                         <div class="w-full md:w-1/2" data-aos="fade-up" data-aos-delay="200">
-                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/800x1000/1F2937/FFFFFF?text=Your+Photo';" alt="Professional portrait" class="rounded-lg shadow-2xl w-full">
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/800x1000/1F2937/FFFFFF?text=Your+Photo';" alt="Professional portrait of Nirmal" class="rounded-lg shadow-2xl w-full" loading="lazy">
                         </div>
                         <div class="w-full md:w-1/2 space-y-8 mt-12 md:mt-0" data-aos="fade-up">
                             <div>
@@ -292,7 +274,6 @@
                 </div>
             </section>
 
-            <!-- Contact Section -->
             <section id="contact" class="color-trigger-section py-20" data-bg-color="#111111">
                 <div class="container mx-auto px-6 text-center" data-aos="zoom-in">
                     <h2 class="text-4xl sm:text-5xl md:text-7xl font-bold text-white">Let's work together.</h2>
@@ -301,28 +282,25 @@
             </section>
         </main>
 
-        <!-- Footer -->
         <footer class="bg-black text-white">
             <div class="container mx-auto px-6 py-12">
                 <div class="flex flex-col md:flex-row items-center justify-between">
                     <p class="text-xl text-gray-400">&copy; 2025 Nirmal</p>
                     <div class="flex mt-4 md:mt-0 space-x-6 text-xl">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Twitter</a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Instagram</a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Dribbble</a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">Twitter</a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">Instagram</a>
+                        <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">Dribbble</a>
                     </div>
                 </div>
             </div>
         </footer>
     </div>
 
-    <!-- This div is for the separate project page view -->
     <div id="project-detail-view" class="page hidden">
-        <!-- Project Page Header -->
         <header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
             <div class="container mx-auto px-6 py-4">
                 <div class="flex items-center justify-between">
-                    <a href="#" id="project-back-link" class="text-2xl font-bold text-white">N.</a>
+                    <a href="#hero" id="project-back-link" class="text-2xl font-bold text-white">N.</a>
                     <button id="close-project-button" class="text-white">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
@@ -330,9 +308,8 @@
             </div>
         </header>
         <div class="project-detail-content">
-             <div id="project-content" class="container mx-auto px-6 max-w-4xl text-center text-white">
-                <!-- Project content will be injected here by JS -->
-            </div>
+             <div id="project-content" class="container mx-auto max-w-7xl text-center text-white">
+                </div>
         </div>
     </div>
 
@@ -343,23 +320,33 @@
         const projects = [
             {
                 id: 0,
-                client: 'Google',
-                project: 'Chromecast AR Experience',
-                role: '3D / UX-UI Design / Motion',
-                agency: 'Grow',
-                year: 2024,
-                description: 'Google wanted to help users experience the benefits of a Smart Home without leaving the comfort of theirs. Through the power of AR we showed users the power of Google Home paired with Chromecast and their home TV. The demo let them place the trio in their space and stream YouTube content in real time - leveraging the magic of the devices alongside the most compelling human use case.',
-                bgColor: '#F59E0B' // Amber-500
+                client: 'Kaapi District',
+                project: 'Brand Identity & Web Design',
+                role: 'Art direction, Design, Web design',
+                agency: 'In-house',
+                year: 2022,
+                description: 'Kaapi District\'s branding evokes South India\'s traditional roasting houses with a vintage wordmark. The carefully designed merchandise, like T-shirts, cups, and coffee bags, captures the brand\'s essence, telling a story that celebrates the rich heritage of South Indian coffee culture with a blend of tradition and modernity.',
+                bgColor: '#465d2f',
+                logoUrl: 'images/kaapi_district_logo_white.png',
+                mainImageUrl: 'images/kaapi-district-brand-guidelines.gif',
+                detailImages: [
+                    'images/Kaapi+District+website.png',
+                ]
             },
             {
                 id: 1,
-                client: 'Nike',
+                client: 'Northern Escape',
                 project: 'Air Max Campaign',
                 role: 'Art Direction / Branding',
                 agency: 'In-house',
                 year: 2023,
                 description: 'A global campaign for the launch of the new Air Max silhouette. We developed the core creative concept, directed the photoshoot, and produced a series of digital and physical assets that were deployed across all of Nike\'s major markets, resulting in a record-breaking launch week.',
-                bgColor: '#8B5CF6' // Violet-500
+                bgColor: '#394b72',
+                logoUrl: 'images/nike-logo.png', // Example path
+                mainImageUrl: 'images/northern-escape-main.jpg',
+                detailImages: [
+                    ,
+                ]
             },
             {
                 id: 2,
@@ -369,18 +356,37 @@
                 agency: 'COLLINS',
                 year: 2023,
                 description: 'Tasked with visualizing the data of millions of users for Spotify\'s annual "Wrapped" campaign. We created a vibrant and dynamic design system, including a custom set of illustrations and motion graphics, to bring each user\'s personal listening story to life in a unique and shareable way.',
-                bgColor: '#EC4899' // Pink-500
+                bgColor: '#EC4899',
+                logoUrl: 'images/spotify-logo.png', // Example path
+                mainImageUrl: 'images/spotify-wrapped-main.jpg',
+                detailImages: [
+                    'https://placehold.co/800x1200/EC4899/FFFFFF?text=Image+1',
+                    'https://placehold.co/1200x800/EC4899/FFFFFF?text=Image+2',
+                    'https://placehold.co/1200x800/EC4899/FFFFFF?text=Image+3',
+                ]
             }
         ];
 
+        let showProjectPage;
+        let detailPageObserver; 
+
+        function navigateToProject(projectId) {
+            const detailView = document.getElementById('project-detail-view');
+            detailView.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            setTimeout(() => {
+                if (showProjectPage) {
+                    showProjectPage(projectId);
+                }
+            }, 300);
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            // --- INITIALIZE AOS ---
             AOS.init({
                 duration: 800,
                 once: true,
             });
 
-            // --- PAGE ELEMENTS ---
             const homePage = document.getElementById('home-page');
             const projectDetailPage = document.getElementById('project-detail-view');
             const projectContent = document.getElementById('project-content');
@@ -388,44 +394,123 @@
             const closeButton = document.getElementById('close-project-button');
             const projectBackLink = document.getElementById('project-back-link');
             const glassCursor = document.getElementById('glass-cursor');
+            const body = document.body;
 
-            // --- FUNCTIONS TO SHOW/HIDE PAGES ---
-            const showProjectPage = (projectId) => {
+            showProjectPage = (projectId) => {
                 const project = projects.find(p => p.id == projectId);
                 if (!project) return;
+                
+                const currentIndex = projects.findIndex(p => p.id == projectId);
+                const nextProjectId = projects[(currentIndex + 1) % projects.length].id;
+                const prevProjectId = projects[(currentIndex - 1 + projects.length) % projects.length].id;
 
-                // Populate content
+                const imagesHTML = project.detailImages.map(imgSrc => `
+                    <div data-aos="fade-up" data-aos-delay="100">
+                        <img src="${imgSrc}" alt="${project.project} detail image" class="rounded-lg w-full">
+                    </div>
+                `).join('');
+
                 projectContent.innerHTML = `
-                    <div data-aos="fade-up">
-                        <p class="text-xl md:text-2xl leading-relaxed">${project.description}</p>
-                        <div class="mt-8 text-base opacity-90">
-                            <p><span class="font-semibold">Client:</span> ${project.client}</p>
-                            <p><span class="font-semibold">Project:</span> ${project.project}</p>
-                            <p><span class="font-semibold">Role:</span> ${project.role}</p>
-                            <p><span class="font-semibold">Agency:</span> ${project.agency}</p>
-                            <p><span class="font-semibold">Year:</span> ${project.year}</p>
+                    <div id="project-info-section" class="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-8">
+                        <div data-aos="fade-up" class="max-w-3xl">
+                             <img src="${project.logoUrl}" alt="${project.client} Logo" class="h-32 w-auto mx-auto mb-8" data-aos="fade-down">
+                            <p class="text-xl md:text-2xl leading-relaxed text-white">${project.description}</p>
+                            <div class="mt-8 text-base text-white pt-4">
+                                <p><span class="font-semibold">Client:</span> ${project.client}</p>
+                                <p><span class="font-semibold">Project:</span> ${project.project}</p>
+                                <p><span class="font-semibold">Role:</span> ${project.role}</p>
+                                <p><span class="font-semibold">Agency:</span> ${project.agency}</p>
+                                <p><span class="font-semibold">Year:</span> ${project.year}</p>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="py-16 md:py-24" data-aos="fade-up">
+                        <img src="${project.mainImageUrl}" alt="Project main image" class="rounded-lg w-full">
+                    </div>
+
+                    <div class="pb-16 md:pb-24 space-y-8 md:space-y-12">
+                        ${imagesHTML}
+                    </div>
+
+                    <nav id="project-nav" class="py-12 flex justify-between items-center text-white">
+                        <a href="#" onclick="event.preventDefault(); navigateToProject(${prevProjectId})" class="group relative w-48 h-20 flex items-center justify-start text-left">
+                            <span class="transition-all duration-300 group-hover:opacity-0 group-hover:translate-x-4">
+                                <span class="text-3xl md:text-4xl font-black uppercase leading-none">Previous<br>Project</span>
+                            </span>
+                            <span class="absolute left-0 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                            </span>
+                        </a>
+
+                        <a href="#" onclick="event.preventDefault(); navigateToProject(${nextProjectId})" class="group relative w-48 h-20 flex items-center justify-end text-right">
+                             <span class="transition-all duration-300 group-hover:opacity-0 group-hover:-translate-x-4">
+                                <span class="text-3xl md:text-4xl font-black uppercase leading-none">Next<br>Project</span>
+                            </span>
+                            <span class="absolute right-0 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </span>
+                        </a>
+                    </nav>
                 `;
                 
-                // Set background color for the detail page
                 body.style.backgroundColor = project.bgColor;
-
-                // Hide home and show project page
                 homePage.classList.add('hidden');
                 projectDetailPage.classList.remove('hidden');
                 projectDetailPage.scrollTop = 0;
+                window.location.hash = `project-${project.id}`;
                 
-                // Re-initialize AOS for the new content
-                setTimeout(() => AOS.refresh(), 100);
+                setTimeout(() => { AOS.refreshHard(); }, 100);
+
+                if (detailPageObserver) {
+                    detailPageObserver.disconnect();
+                }
+                const infoSection = projectContent.querySelector('#project-info-section');
+                const navSection = projectContent.querySelector('#project-nav');
+                const navLinks = navSection.querySelectorAll('a');
+
+                const observerOptions = {
+                    root: projectDetailPage, 
+                    rootMargin: '0px',
+                    threshold: 0.4 
+                };
+                
+                detailPageObserver = new IntersectionObserver((entries) => {
+                    const infoEntry = entries.find(e => e.target.id === 'project-info-section');
+                    const navEntry = entries.find(e => e.target.id === 'project-nav');
+
+                    if (navEntry && navEntry.isIntersecting) {
+                        body.style.backgroundColor = '#111111'; // Black
+                        navLinks.forEach(link => link.classList.remove('text-black'));
+                    } else if (infoEntry && infoEntry.isIntersecting) {
+                        body.style.backgroundColor = project.bgColor;
+                        navLinks.forEach(link => link.classList.remove('text-black'));
+                    } else {
+                        body.style.backgroundColor = '#ffffff'; // White
+                        navLinks.forEach(link => link.classList.add('text-black'));
+                    }
+                }, observerOptions);
+
+                if (infoSection) detailPageObserver.observe(infoSection);
+                if (navSection) detailPageObserver.observe(navSection);
             };
 
             const showHomePage = () => {
+                if (detailPageObserver) {
+                    detailPageObserver.disconnect();
+                }
                 projectDetailPage.classList.add('hidden');
                 homePage.classList.remove('hidden');
+                history.pushState("", document.title, window.location.pathname + window.location.search);
+                
+                const visibleSection = Array.from(colorSections).find(section => {
+                    const rect = section.getBoundingClientRect();
+                    return rect.top >= 0 && rect.top <= window.innerHeight / 2;
+                }) || document.getElementById('hero');
+                
+                body.style.backgroundColor = visibleSection.dataset.bgColor;
             };
 
-            // --- EVENT LISTENERS FOR PAGE NAVIGATION ---
             projectClickableSections.forEach(section => {
                 section.addEventListener('click', () => {
                     const projectId = section.dataset.projectId;
@@ -438,32 +523,28 @@
                 e.preventDefault();
                 showHomePage();
             });
-            
-            // --- SEAMLESS BACKGROUND COLOR CHANGE ON SCROLL ---
-            const colorSections = document.querySelectorAll('.color-trigger-section');
-            const body = document.body;
 
-            const observerOptions = {
-              root: null,
-              rootMargin: '0px',
-              threshold: 0.55 // When 55% of the section is visible
-            };
-
-            const colorObserver = new IntersectionObserver((entries, observer) => {
-              entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                  const newColor = entry.target.dataset.bgColor;
-                  body.style.backgroundColor = newColor;
+            const handleInitialLoad = () => {
+                const hash = window.location.hash;
+                if (hash.startsWith('#project-')) {
+                    const projectId = hash.replace('#project-', '');
+                    setTimeout(() => showProjectPage(projectId), 100);
                 }
-              });
+            };
+            handleInitialLoad();
+
+            const colorSections = document.querySelectorAll('.color-trigger-section');
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.55 };
+            const colorObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !homePage.classList.contains('hidden')) {
+                        const newColor = entry.target.dataset.bgColor;
+                        body.style.backgroundColor = newColor;
+                    }
+                });
             }, observerOptions);
+            colorSections.forEach(section => { colorObserver.observe(section); });
 
-            colorSections.forEach(section => {
-              colorObserver.observe(section);
-            });
-
-
-            // --- MOBILE MENU ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuLinks = mobileMenu.querySelectorAll('a');
@@ -471,7 +552,9 @@
             mobileMenuButton.addEventListener('click', (e) => {
                 e.stopPropagation();
                 mobileMenu.classList.toggle('hidden');
-                mobileMenuButton.innerHTML = mobileMenu.classList.contains('hidden')
+                const isHidden = mobileMenu.classList.contains('hidden');
+                mobileMenuButton.setAttribute('aria-label', isHidden ? 'Open navigation menu' : 'Close navigation menu');
+                mobileMenuButton.innerHTML = isHidden
                     ? `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>`
                     : `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
             });
@@ -479,11 +562,11 @@
             mobileMenuLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     mobileMenu.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-label', 'Open navigation menu');
                     mobileMenuButton.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>`;
                 });
             });
 
-            // Smooth scroll for home page navigation links
             document.querySelectorAll('#home-page a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -494,155 +577,106 @@
                 });
             });
 
-            // --- TYPEWRITER EFFECT ---
             const typewriterElement = document.getElementById('typewriter');
             const bioParagraph = document.getElementById('hero-bio');
-            const linesToType = ["Hi, Im", "Nirmal."]; // The lines to be typed
-
-            typewriterElement.textContent = ''; // Clear original text
-            bioParagraph.style.opacity = '0'; // Hide bio initially
-            bioParagraph.style.transition = 'opacity 0.5s ease-in-out 0.3s'; // Add delay
-
+            const linesToType = ["Hi, Im", "Nirmal."];
+            typewriterElement.textContent = '';
+            bioParagraph.style.opacity = '0';
+            bioParagraph.style.transition = 'opacity 0.5s ease-in-out 0.3s';
             let lineIndex = 0;
             let charIndex = 0;
-
             function type() {
                 if (lineIndex >= linesToType.length) {
-                    // Finished all lines
-                    typewriterElement.innerHTML = linesToType.join('<br>'); // Set final HTML without cursor
-                    bioParagraph.style.opacity = '1'; // Fade in bio
+                    typewriterElement.innerHTML = linesToType.join('<br>');
+                    bioParagraph.style.opacity = '1';
                     return;
                 }
-
                 const currentLine = linesToType[lineIndex];
                 if (charIndex < currentLine.length) {
-                    // Build the content so far
                     let content = '';
                     for (let i = 0; i < lineIndex; i++) {
                         content += linesToType[i] + '<br>';
                     }
                     content += currentLine.substring(0, charIndex + 1);
-
-                    typewriterElement.innerHTML = content + '<span class="typing-cursor">_</span>';
+                    typewriterElement.innerHTML = content + '<span class="typing-cursor"></span>';
                     charIndex++;
                     setTimeout(type, 120);
                 } else {
-                    // Finished a line, move to the next
                     lineIndex++;
                     charIndex = 0;
-                    // Add a pause between lines
                     setTimeout(type, 300);
                 }
             }
-
-            // Start the animation after a short delay
             setTimeout(type, 500);
 
-
-            // --- WAVY DOTS BACKGROUND ANIMATION WITH PHYSICS-BASED CURSOR INTERACTION ---
             const canvas = document.getElementById('motion-background');
             const ctx = canvas.getContext('2d');
             let time = 0;
             let grid = [];
-            const gridSize = 25; // Spacing between dots
+            const gridSize = 25;
             const mouse = { x: undefined, y: undefined, radius: 100 };
-
-            window.addEventListener('mousemove', e => {
-                mouse.x = e.x;
-                mouse.y = e.y;
-            });
-            window.addEventListener('mouseout', () => {
-                mouse.x = undefined;
-                mouse.y = undefined;
-            });
-
+            window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
+            window.addEventListener('mouseout', () => { mouse.x = undefined; mouse.y = undefined; });
             function resizeCanvas() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
                 createGrid();
             }
-            
             function createGrid() {
                 grid = [];
                 for (let x = 0; x < canvas.width + gridSize; x += gridSize) {
                     for (let y = 0; y < canvas.height + gridSize; y += gridSize) {
-                        grid.push({ 
-                            x: x, y: y, 
-                            originalX: x, originalY: y,
-                            vx: 0, vy: 0 // velocity for physics
-                        });
+                        grid.push({ x: x, y: y, originalX: x, originalY: y, vx: 0, vy: 0 });
                     }
                 }
             }
-
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
-
             function animate() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 time += 0.005;
-
                 grid.forEach(point => {
                     let forceX = 0;
                     let forceY = 0;
-
-                    // 1. Spring force to pull back to original position
-                    const springForceX = (point.originalX - point.x) * 0.01; // Spring stiffness
+                    const springForceX = (point.originalX - point.x) * 0.01;
                     const springForceY = (point.originalY - point.y) * 0.01;
                     forceX += springForceX;
                     forceY += springForceY;
-
-                    // 2. Cursor repel force
                     if (mouse.x !== undefined) {
                         const dist_x = mouse.x - point.x;
                         const dist_y = mouse.y - point.y;
                         const dist = Math.sqrt(dist_x * dist_x + dist_y * dist_y);
-
                         if (dist < mouse.radius) {
                             const repelForce = (mouse.radius - dist) / mouse.radius;
                             const angle = Math.atan2(dist_y, dist_x);
-                            forceX -= Math.cos(angle) * repelForce * 0.7; // Repel strength
+                            forceX -= Math.cos(angle) * repelForce * 0.7;
                             forceY -= Math.sin(angle) * repelForce * 0.7;
                         }
                     }
-                    
-                    // 3. Wavy motion force
                     const waveForceX = Math.sin(point.originalY / 50 + time) * 0.05;
                     const waveForceY = Math.cos(point.originalX / 50 + time) * 0.05;
                     forceX += waveForceX;
                     forceY += waveForceY;
-
-                    // Update velocity with forces (acceleration)
                     point.vx += forceX;
                     point.vy += forceY;
-
-                    // Apply friction/damping to slow down
                     point.vx *= 0.92;
                     point.vy *= 0.92;
-
-                    // Update position with velocity
                     point.x += point.vx;
                     point.y += point.vy;
-                    
-                    // Calculate opacity based on another wave for a pulsing effect
-                    const opacity = (Math.sin(point.originalX / 100 + point.originalY / 100 + time) + 1) / 2 * 0.1 + 0.05; // Reduced opacity
-
+                    const opacity = (Math.sin(point.originalX / 100 + point.originalY / 100 + time) + 1) / 2 * 0.1 + 0.05;
                     ctx.beginPath();
                     ctx.arc(point.x, point.y, 1.5, 0, Math.PI * 2);
                     ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
                     ctx.fill();
                 });
-
                 requestAnimationFrame(animate);
             }
             animate();
 
-            // --- CUSTOM CURSOR LOGIC ---
             window.addEventListener('mousemove', (e) => {
                 glassCursor.style.top = e.clientY + 'px';
                 glassCursor.style.left = e.clientX + 'px';
             });
-
             const interactiveElements = document.querySelectorAll('a, button, .project-section');
             interactiveElements.forEach(el => {
                 el.addEventListener('mouseenter', () => glassCursor.classList.add('hover'));
@@ -650,6 +684,5 @@
             });
         });
     </script>
-
 </body>
 </html>
