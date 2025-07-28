@@ -75,7 +75,7 @@
              align-items: center;
              position: relative;
              z-index: 1;
-        }
+         }
         /* Custom Inverting Cursor */
         #glass-cursor {
             position: fixed;
@@ -174,9 +174,9 @@
                                     </h1>
                             </div>
                             <div class="w-full md:w-1/4 md:mb-2 text-center md:text-left">
-                                 <p id="hero-bio" class="text-xl md:text-2xl text-gray-400">
-                                     I’m a graphic designer passionate about creating visuals that communicate and captivate.
-                                 </p>
+                                <p id="hero-bio" class="text-xl md:text-2xl text-gray-400">
+                                    I’m a graphic designer passionate about creating visuals that communicate and captivate.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -203,7 +203,7 @@
                                 <p class="text-sm">Year: 2022</p>
                             </div>
                             <div class="w-full md:w-3/4 mt-8 md:mt-0 overflow-hidden rounded-lg shadow-2xl" data-aos="fade-left" data-aos-delay="200">
-                                <img src="images/kaapi_homepage.jpg" alt="Kaapi District Homepage" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105">
+                                <img src="images/kaapi_homepage.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/465d2f/FFFFFF?text=Project+Image';" alt="Kaapi District Homepage" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105">
                             </div>
                         </div>
                     </div>
@@ -219,7 +219,7 @@
                                 <p class="text-sm">Year: 2023</p>
                             </div>
                             <div class="w-full md:w-3/4 mt-8 md:mt-0 overflow-hidden rounded-lg shadow-2xl" data-aos="fade-left" data-aos-delay="200">
-                                <img src="images/northern-escpe.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Stylish sneakers" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" loading="lazy">
+                                <img src="images/northern-escape.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/394b72/FFFFFF?text=Project+Image';" alt="Northern Escape preview" class="w-full h-full object-contain transition-transform duration-500 ease-in-out group-hover:scale-105" loading="lazy">
                             </div>
                         </div>
                     </div>
@@ -235,7 +235,7 @@
                                 <p class="text-sm">Year: 2023</p>
                             </div>
                             <div class="w-full md:w-3/4 mt-8 md:mt-0 overflow-hidden rounded-lg shadow-2xl" data-aos="fade-left" data-aos-delay="200">
-                                <img src="https://images.unsplash.com/photo-1507208773393-40d9fc670c58?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Colorful abstract light trails" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" loading="lazy">
+                                <img src="https://images.unsplash.com/photo-1507208773393-40d9fc670c58?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/EC4899/FFFFFF?text=Project+Image';" alt="Colorful abstract light trails" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" loading="lazy">
                             </div>
                         </div>
                     </div>
@@ -327,9 +327,10 @@
                 year: 2022,
                 description: 'Kaapi District\'s branding evokes South India\'s traditional roasting houses with a vintage wordmark. The carefully designed merchandise, like T-shirts, cups, and coffee bags, captures the brand\'s essence, telling a story that celebrates the rich heritage of South Indian coffee culture with a blend of tradition and modernity.',
                 bgColor: '#465d2f',
-                logoUrl: 'images/kaapi_district_logo_white.png',
-                mainImageUrl: './images/kaapi-district-brand-guidelines.gif',
+                logoUrl: 'images/kaapi-logo.png',
+                mainImageUrl: 'images/kaapi-main-image.jpg',
                 detailImages: [
+                    'images/kaapi-district-brand-guidelines.gif',
                     'images/Kaapi+District+website.png',
                 ]
             },
@@ -342,11 +343,9 @@
                 year: 2023,
                 description: 'A global campaign for the launch of the new Air Max silhouette. We developed the core creative concept, directed the photoshoot, and produced a series of digital and physical assets that were deployed across all of Nike\'s major markets, resulting in a record-breaking launch week.',
                 bgColor: '#394b72',
-                logoUrl: 'images/nike-logo.png', // Example path
-                mainImageUrl: './images/northern-escape-main.jpg',
-                detailImages: [
-                    ,
-                ]
+                logoUrl: 'images/northern-escape-logo.png',
+                mainImageUrl: 'images/northern-escape-main.jpg',
+                detailImages: []
             },
             {
                 id: 2,
@@ -357,7 +356,7 @@
                 year: 2023,
                 description: 'Tasked with visualizing the data of millions of users for Spotify\'s annual "Wrapped" campaign. We created a vibrant and dynamic design system, including a custom set of illustrations and motion graphics, to bring each user\'s personal listening story to life in a unique and shareable way.',
                 bgColor: '#EC4899',
-                logoUrl: 'images/spotify-logo.png', // Example path
+                logoUrl: 'images/spotify-logo.png',
                 mainImageUrl: 'images/spotify-wrapped-main.jpg',
                 detailImages: [
                     'https://placehold.co/800x1200/EC4899/FFFFFF?text=Image+1',
@@ -406,14 +405,14 @@
 
                 const imagesHTML = project.detailImages.map(imgSrc => `
                     <div data-aos="fade-up" data-aos-delay="100">
-                        <img src="${imgSrc}" alt="${project.project} detail image" class="rounded-lg w-full">
+                        <img src="${imgSrc}" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Image+Not+Found';" alt="${project.project} detail image" class="rounded-lg w-full">
                     </div>
                 `).join('');
 
                 projectContent.innerHTML = `
                     <div id="project-info-section" class="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-8">
                         <div data-aos="fade-up" class="max-w-3xl">
-                             <img src="${project.logoUrl}" alt="${project.client} Logo" class="h-32 w-auto mx-auto mb-8" data-aos="fade-down">
+                             <img src="${project.logoUrl}" onerror="this.onerror=null;this.src='https://placehold.co/200x200/FFFFFF/000000?text=Logo';" alt="${project.client} Logo" class="h-48 w-auto mx-auto mb-8" data-aos="fade-down">
                             <p class="text-xl md:text-2xl leading-relaxed text-white">${project.description}</p>
                             <div class="mt-8 text-base text-white pt-4">
                                 <p><span class="font-semibold">Client:</span> ${project.client}</p>
@@ -426,7 +425,7 @@
                     </div>
 
                     <div class="py-16 md:py-24" data-aos="fade-up">
-                        <img src="${project.mainImageUrl}" alt="Project main image" class="rounded-lg w-full">
+                        <img src="${project.mainImageUrl}" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Project main image" class="rounded-lg w-full">
                     </div>
 
                     <div class="pb-16 md:pb-24 space-y-8 md:space-y-12">
@@ -465,10 +464,7 @@
                 if (detailPageObserver) {
                     detailPageObserver.disconnect();
                 }
-                const infoSection = projectContent.querySelector('#project-info-section');
                 const navSection = projectContent.querySelector('#project-nav');
-                const navLinks = navSection.querySelectorAll('a');
-
                 const observerOptions = {
                     root: projectDetailPage, 
                     rootMargin: '0px',
@@ -476,23 +472,18 @@
                 };
                 
                 detailPageObserver = new IntersectionObserver((entries) => {
-                    const infoEntry = entries.find(e => e.target.id === 'project-info-section');
-                    const navEntry = entries.find(e => e.target.id === 'project-nav');
-
-                    if (navEntry && navEntry.isIntersecting) {
-                        body.style.backgroundColor = '#111111'; // Black
-                        navLinks.forEach(link => link.classList.remove('text-black'));
-                    } else if (infoEntry && infoEntry.isIntersecting) {
-                        body.style.backgroundColor = project.bgColor;
-                        navLinks.forEach(link => link.classList.remove('text-black'));
-                    } else {
-                        body.style.backgroundColor = '#ffffff'; // White
-                        navLinks.forEach(link => link.classList.add('text-black'));
-                    }
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            body.style.backgroundColor = '#111111';
+                        } else {
+                            body.style.backgroundColor = project.bgColor;
+                        }
+                    });
                 }, observerOptions);
 
-                if (infoSection) detailPageObserver.observe(infoSection);
-                if (navSection) detailPageObserver.observe(navSection);
+                if (navSection) {
+                    detailPageObserver.observe(navSection);
+                }
             };
 
             const showHomePage = () => {
@@ -615,6 +606,11 @@
             let grid = [];
             const gridSize = 25;
             const mouse = { x: undefined, y: undefined, radius: 100 };
+            
+            // --- NEW: Flags to track section visibility ---
+            let isHeroVisible = true;
+            let isContactVisible = false;
+
             window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
             window.addEventListener('mouseout', () => { mouse.x = undefined; mouse.y = undefined; });
             function resizeCanvas() {
@@ -632,9 +628,34 @@
             }
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
+
+            // --- NEW: Observer for hero and contact sections ---
+            const heroSection = document.getElementById('hero');
+            const contactSection = document.getElementById('contact');
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.target.id === 'hero') {
+                        isHeroVisible = entry.isIntersecting;
+                    }
+                    if (entry.target.id === 'contact') {
+                        isContactVisible = entry.isIntersecting;
+                    }
+                });
+            }, { threshold: 0.1 }); 
+
+            if (heroSection) {
+                sectionObserver.observe(heroSection);
+            }
+            if (contactSection) {
+                sectionObserver.observe(contactSection);
+            }
+
+
             function animate() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 time += 0.005;
+
                 grid.forEach(point => {
                     let forceX = 0;
                     let forceY = 0;
@@ -642,33 +663,55 @@
                     const springForceY = (point.originalY - point.y) * 0.01;
                     forceX += springForceX;
                     forceY += springForceY;
+
+                    let color = '255, 255, 255'; 
+                    let finalOpacity = (Math.sin(point.originalX / 100 + point.originalY / 100 + time) + 1) / 2 * 0.1 + 0.05;
+                    let radius = 1.5;
+
+                    ctx.shadowBlur = 0;
+
                     if (mouse.x !== undefined) {
                         const dist_x = mouse.x - point.x;
                         const dist_y = mouse.y - point.y;
                         const dist = Math.sqrt(dist_x * dist_x + dist_y * dist_y);
+
                         if (dist < mouse.radius) {
-                            const repelForce = (mouse.radius - dist) / mouse.radius;
+                            const proximityFactor = (mouse.radius - dist) / mouse.radius;
+                            
+                            // --- UPDATED: Check if hero OR contact is visible ---
+                            if (isHeroVisible || isContactVisible) {
+                                // --- UPDATED: Changed to Vibrant Lavender ---
+                                color = '199, 146, 255'; 
+                                finalOpacity = proximityFactor;
+                                radius = 1.5 + proximityFactor * 1;
+                                ctx.shadowBlur = proximityFactor * 35;
+                                ctx.shadowColor = `rgba(${color}, 1)`;
+                            }
+
                             const angle = Math.atan2(dist_y, dist_x);
-                            forceX -= Math.cos(angle) * repelForce * 0.7;
-                            forceY -= Math.sin(angle) * repelForce * 0.7;
+                            forceX -= Math.cos(angle) * proximityFactor * 0.7;
+                            forceY -= Math.sin(angle) * proximityFactor * 0.7;
                         }
                     }
+
                     const waveForceX = Math.sin(point.originalY / 50 + time) * 0.05;
                     const waveForceY = Math.cos(point.originalX / 50 + time) * 0.05;
                     forceX += waveForceX;
                     forceY += waveForceY;
+
                     point.vx += forceX;
                     point.vy += forceY;
                     point.vx *= 0.92;
                     point.vy *= 0.92;
                     point.x += point.vx;
                     point.y += point.vy;
-                    const opacity = (Math.sin(point.originalX / 100 + point.originalY / 100 + time) + 1) / 2 * 0.1 + 0.05;
+
                     ctx.beginPath();
-                    ctx.arc(point.x, point.y, 1.5, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                    ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${color}, ${finalOpacity})`;
                     ctx.fill();
                 });
+
                 requestAnimationFrame(animate);
             }
             animate();
