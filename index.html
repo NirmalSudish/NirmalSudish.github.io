@@ -38,14 +38,11 @@
             justify-content: center;
             padding: 5rem 1.5rem;
             overflow-x: hidden;
-            cursor: pointer; 
+            /* Removed cursor pointer as the whole section is no longer the main link */
             transition: opacity 0.3s ease-in-out;
             background-color: transparent; /* Made transparent to let body color show through */
             position: relative; /* Needed for z-index to work with content */
             z-index: 1;
-        }
-        .project-section:hover {
-            opacity: 0.9;
         }
         /* Page transition styles */
         .page {
@@ -125,6 +122,31 @@
         .animate-bounce-slow {
             animation: bounce 2s infinite;
         }
+
+        /* --- NEW: Tilted Card Effect Styles --- */
+        .tilted-card-figure {
+            position: relative;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .tilted-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        .tilted-card-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.5rem; /* Corresponds to Tailwind's rounded-lg */
+        }
+
+
         /* Hide custom cursor on touch devices */
         @media (pointer: coarse) {
             #glass-cursor {
@@ -132,6 +154,10 @@
             }
             body {
                 cursor: auto;
+            }
+            /* Disable tilt effect on touch devices as it relies on mouse move */
+            .tilted-card-inner {
+                transform: none !important;
             }
         }
     </style>
@@ -194,7 +220,7 @@
             </section>
 
             <section id="work">
-                <div class="project-section color-trigger-section group" data-project-id="0" data-bg-color="#465d2f">
+                <div class="project-section color-trigger-section" data-project-id="0" data-bg-color="#465d2f">
                     <div class="container mx-auto px-6">
                         <div class="flex flex-col md:flex-row items-center gap-8 text-white">
                             <div class="w-full md:w-1/4 space-y-2 text-center md:text-left" data-aos="fade-right">
@@ -202,13 +228,17 @@
                                 <p class="text-sm">Role: Art direction, Design, Web design</p>
                                 <p class="text-sm">Year: 2022</p>
                             </div>
-                            <div class="w-full md:w-3/4 mt-8 md:mt-0 overflow-hidden rounded-lg shadow-2xl" data-aos="fade-left" data-aos-delay="200">
-                                <img src="images/kaapi_homepage.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/465d2f/FFFFFF?text=Project+Image';" alt="Kaapi District Homepage" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105">
+                            <div class="w-full md:w-3/4 mt-8 md:mt-0" data-aos="fade-left" data-aos-delay="200">
+                                <div class="tilted-card-figure">
+                                    <div class="tilted-card-inner">
+                                        <img src="images/kaapi_homepage.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/465d2f/FFFFFF?text=Project+Image';" alt="Kaapi District Homepage" class="w-full h-full object-cover rounded-lg shadow-2xl">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="project-section color-trigger-section group" data-project-id="1" data-bg-color="#394b72">
+                <div class="project-section color-trigger-section" data-project-id="1" data-bg-color="#394b72">
                     <div class="container mx-auto px-6">
                         <div class="flex flex-col md:flex-row items-center gap-8 text-white">
                             <div class="w-full md:w-1/4 space-y-2 text-center md:text-left" data-aos="fade-right">
@@ -218,13 +248,17 @@
                                 <p class="text-sm">Agency: In-house</p>
                                 <p class="text-sm">Year: 2023</p>
                             </div>
-                            <div class="w-full md:w-3/4 mt-8 md:mt-0 overflow-hidden rounded-lg shadow-2xl" data-aos="fade-left" data-aos-delay="200">
-                                <img src="images/northern-escape.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/394b72/FFFFFF?text=Project+Image';" alt="Northern Escape preview" class="w-full h-full object-contain transition-transform duration-500 ease-in-out group-hover:scale-105" loading="lazy">
+                            <div class="w-full md:w-3/4 mt-8 md:mt-0" data-aos="fade-left" data-aos-delay="200">
+                                <div class="tilted-card-figure">
+                                    <div class="tilted-card-inner">
+                                        <img src="images/northern-escape.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/394b72/FFFFFF?text=Project+Image';" alt="Northern Escape preview" class="w-full h-full object-contain rounded-lg shadow-2xl">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="project-section color-trigger-section group" data-project-id="2" data-bg-color="#EC4899">
+                <div class="project-section color-trigger-section" data-project-id="2" data-bg-color="#EC4899">
                     <div class="container mx-auto px-6">
                         <div class="flex flex-col md:flex-row items-center gap-8 text-white">
                             <div class="w-full md:w-1/4 space-y-2 text-center md:text-left" data-aos="fade-right">
@@ -234,8 +268,12 @@
                                 <p class="text-sm">Agency: COLLINS</p>
                                 <p class="text-sm">Year: 2023</p>
                             </div>
-                            <div class="w-full md:w-3/4 mt-8 md:mt-0 overflow-hidden rounded-lg shadow-2xl" data-aos="fade-left" data-aos-delay="200">
-                                <img src="https://images.unsplash.com/photo-1507208773393-40d9fc670c58?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/EC4899/FFFFFF?text=Project+Image';" alt="Colorful abstract light trails" class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" loading="lazy">
+                            <div class="w-full md:w-3/4 mt-8 md:mt-0" data-aos="fade-left" data-aos-delay="200">
+                                <div class="tilted-card-figure">
+                                    <div class="tilted-card-inner">
+                                        <img src="https://images.unsplash.com/photo-1507208773393-40d9fc670c58?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/EC4899/FFFFFF?text=Project+Image';" alt="Colorful abstract light trails" class="w-full h-full object-cover rounded-lg shadow-2xl">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -501,13 +539,17 @@
                 
                 body.style.backgroundColor = visibleSection.dataset.bgColor;
             };
-
-            projectClickableSections.forEach(section => {
-                section.addEventListener('click', () => {
-                    const projectId = section.dataset.projectId;
-                    showProjectPage(projectId);
+            
+            document.querySelectorAll('.tilted-card-figure').forEach(figure => {
+                figure.addEventListener('click', () => {
+                    const projectSection = figure.closest('.project-section');
+                    if (projectSection) {
+                        const projectId = projectSection.dataset.projectId;
+                        showProjectPage(projectId);
+                    }
                 });
             });
+
 
             closeButton.addEventListener('click', showHomePage);
             projectBackLink.addEventListener('click', (e) => {
@@ -607,7 +649,6 @@
             const gridSize = 25;
             const mouse = { x: undefined, y: undefined, radius: 100 };
             
-            // --- NEW: Flags to track section visibility ---
             let isHeroVisible = true;
             let isContactVisible = false;
 
@@ -629,7 +670,6 @@
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
 
-            // --- NEW: Observer for hero and contact sections ---
             const heroSection = document.getElementById('hero');
             const contactSection = document.getElementById('contact');
 
@@ -678,9 +718,7 @@
                         if (dist < mouse.radius) {
                             const proximityFactor = (mouse.radius - dist) / mouse.radius;
                             
-                            // --- UPDATED: Check if hero OR contact is visible ---
                             if (isHeroVisible || isContactVisible) {
-                                // --- UPDATED: Changed to Vibrant Lavender ---
                                 color = '199, 146, 255'; 
                                 finalOpacity = proximityFactor;
                                 radius = 1.5 + proximityFactor * 1;
@@ -725,6 +763,32 @@
                 el.addEventListener('mouseenter', () => glassCursor.classList.add('hover'));
                 el.addEventListener('mouseleave', () => glassCursor.classList.remove('hover'));
             });
+
+            const tiltedCards = document.querySelectorAll('.tilted-card-figure');
+
+            tiltedCards.forEach(card => {
+                const innerCard = card.querySelector('.tilted-card-inner');
+                const rotateAmplitude = 12;
+                const scaleOnHover = 1.05;
+
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const offsetX = e.clientX - rect.left - rect.width / 2;
+                    const offsetY = e.clientY - rect.top - rect.height / 2;
+
+                    const rotationX = (offsetY / (rect.height / 2)) * -rotateAmplitude;
+                    const rotationY = (offsetX / (rect.width / 2)) * rotateAmplitude;
+                    
+                    innerCard.style.transition = 'transform 0.05s linear';
+                    innerCard.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) scale(${scaleOnHover})`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    innerCard.style.transition = 'transform 0.4s ease-out';
+                    innerCard.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+                });
+            });
+
         });
     </script>
 </body>
