@@ -7,7 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <!-- Updated Inter to include weight 300 (Light) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display.swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         /* Custom styles for typography and theme */
@@ -20,6 +21,7 @@
             transition: background-color 0.6s ease-in-out;
             cursor: none; /* Hide the default cursor */
         }
+
         #motion-background {
             position: fixed;
             top: 0;
@@ -38,20 +40,17 @@
             justify-content: center;
             padding: 5rem 1.5rem;
             overflow-x: hidden;
-            /* Removed cursor pointer as the whole section is no longer the main link */
             transition: opacity 0.3s ease-in-out;
-            background-color: transparent; /* Made transparent to let body color show through */
-            position: relative; /* Needed for z-index to work with content */
+            background-color: transparent;
+            position: relative;
             z-index: 1;
         }
         /* Page transition styles */
         .page {
-            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            /* Removed transition here to let JS handle the curtain effect */
         }
         .page.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+            display: none;
         }
         #project-detail-view {
             position: fixed;
@@ -85,84 +84,164 @@
             z-index: 9999;
             background-color: white;
             mix-blend-mode: difference;
-            transition: transform 0.2s ease-out;
+            transition: transform 0.1s ease-out, width 0.3s, height 0.3s; /* Smoother transition */
             transform: translate(-50%, -50%);
         }
         #glass-cursor.hover {
-            transform: translate(-50%, -50%) scale(1.8);
+            width: 80px; /* Larger hover state */
+            height: 80px;
+            mix-blend-mode: difference; 
         }
+        
+        /* Preloader Styles */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+        #preloader.loaded {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Curtain Transition Styles */
+        #transition-curtain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 9998; /* Below cursor, above everything else */
+            transform: translateY(100%);
+            pointer-events: none;
+            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        #transition-curtain.active {
+            transform: translateY(0%);
+        }
+        #transition-curtain.exit {
+            transform: translateY(-100%);
+        }
+
         /* Typewriter effect */
         .typing-cursor::after {
             content: '_';
             display: inline;
             animation: blink 1s infinite;
-            font-weight: 900; /* Match headline weight */
+            font-weight: 900;
         }
 
         @keyframes blink {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
         /* Bouncing Arrow Animation */
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-15px);
-            }
-            60% {
-                transform: translateY(-5px);
-            }
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-5px); }
         }
         .animate-bounce-slow {
             animation: bounce 2s infinite;
         }
 
-        /* --- NEW: Tilted Card Effect Styles --- */
+        /* Circular Text Rotation Animation */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spin 12s linear infinite;
+        }
+
+        /* --- Standard Hover Card Effect Styles (Replaced Tilt) --- */
         .tilted-card-figure {
             position: relative;
-            perspective: 1000px;
-            transform-style: preserve-3d;
             width: 100%;
             height: 100%;
             cursor: pointer;
+            overflow: hidden;
+            border-radius: 0.5rem;
         }
         .tilted-card-inner {
             position: relative;
             width: 100%;
             height: 100%;
-            transform-style: preserve-3d;
-            will-change: transform;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .tilted-card-figure:hover .tilted-card-inner {
+            transform: scale(1.05);
         }
         .tilted-card-inner img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 0.5rem; /* Corresponds to Tailwind's rounded-lg */
+            border-radius: 0.5rem; 
         }
-
+        
+        /* --- Flip Words Styles --- */
+        .flip-word-container {
+            display: inline-block;
+            position: relative;
+            white-space: nowrap;
+            width: 9rem; 
+            text-align: left;
+        }
+        .flip-word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(10px);
+            filter: blur(8px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease;
+            font-weight: 900;
+        }
+        .flip-word.active {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0px);
+            position: relative;
+        }
+        .flip-word.exiting {
+            opacity: 0;
+            transform: translateY(-40px) translateX(40px);
+            filter: blur(8px);
+            scale: 2;
+        }
 
         /* Hide custom cursor on touch devices */
         @media (pointer: coarse) {
-            #glass-cursor {
-                display: none;
-            }
-            body {
-                cursor: auto;
-            }
-            /* Disable tilt effect on touch devices as it relies on mouse move */
-            .tilted-card-inner {
-                transform: none !important;
-            }
+            #glass-cursor { display: none; }
+            body { cursor: auto; }
+            .tilted-card-inner { transform: none !important; }
         }
     </style>
 </head>
 <body class="antialiased">
+    
+    <!-- Preloader -->
+    <div id="preloader">
+        <svg class="w-16 h-16 text-white animate-pulse" data-bbox="5 10.21 272.38 392.93" viewBox="5 10.21 272.38 392.93" xmlns="http://www.w3.org/2000/svg">
+            <g>
+                <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="15" d="M5 21.53v381.61l194.89-178.66-139.48-45.96 43.16-33.49L5 21.53z"/>
+                <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="15" d="M277.38 10.21 60.41 178.52l139.48 45.96-32.3 29.61 109.79 145.17V10.21z"/>
+            </g>
+        </svg>
+    </div>
+
+    <!-- Transition Curtain -->
+    <div id="transition-curtain"></div>
     
     <div id="glass-cursor"></div>
 
@@ -172,21 +251,28 @@
         <header class="fixed top-0 left-0 right-0 z-50">
             <div class="container mx-auto px-6 py-4">
                 <div class="flex items-center justify-between">
-                    <a href="#hero" class="text-2xl font-bold text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white rounded-sm">N.</a>
+                    <a href="#hero" class="text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white rounded-sm">
+                        <svg id="main-logo" class="w-12 h-12 transition-transform duration-200 ease-out" data-bbox="5 10.21 272.38 392.93" viewBox="5 10.21 272.38 392.93" xmlns="http://www.w3.org/2000/svg" data-type="ugc">
+                            <g>
+                                <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="15" d="M5 21.53v381.61l194.89-178.66-139.48-45.96 43.16-33.49L5 21.53z"/>
+                                <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="15" d="M277.38 10.21 60.41 178.52l139.48 45.96-32.3 29.61 109.79 145.17V10.21z"/>
+                            </g>
+                        </svg>
+                    </a>
                     <nav class="hidden md:flex items-center space-x-8">
-                        <a href="#work" class="text-white hover:opacity-75 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white rounded-sm">Work</a>
-                        <a href="#about" class="text-white hover:opacity-75 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white rounded-sm">About</a>
-                        <a href="#contact" class="text-white hover:opacity-75 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white rounded-sm">Contact</a>
+                        <a href="#work" class="text-white font-bold hover:opacity-75 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white rounded-sm uppercase tracking-wider text-lg">Work</a>
+                        <a href="#about" class="text-white font-bold hover:opacity-75 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white rounded-sm uppercase tracking-wider text-lg">About</a>
+                        <a href="#contact" class="text-white font-bold hover:opacity-75 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white rounded-sm uppercase tracking-wider text-lg">Contact</a>
                     </nav>
                     <button id="mobile-menu-button" class="md:hidden text-white z-50" aria-label="Open navigation menu">
-                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
             </div>
-            <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-black/90 backdrop-blur-sm flex flex-col items-center justify-center">
-                <a href="#work" class="block py-4 text-2xl text-gray-300 hover:text-white">Work</a>
-                <a href="#about" class="block py-4 text-2xl text-gray-300 hover:text-white">About</a>
-                <a href="#contact" class="block py-4 text-2xl text-gray-300 hover:text-white">Contact</a>
+            <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-black/90 backdrop-blur-sm flex flex-col items-center justify-center z-40">
+                <a href="#work" class="block py-4 text-4xl font-black text-gray-300 hover:text-white uppercase">Work</a>
+                <a href="#about" class="block py-4 text-4xl font-black text-gray-300 hover:text-white uppercase">About</a>
+                <a href="#contact" class="block py-4 text-4xl font-black text-gray-300 hover:text-white uppercase">Contact</a>
             </div>
         </header>
 
@@ -196,22 +282,32 @@
                     <div class="flex-grow flex items-center">
                         <div class="w-full flex flex-col md:flex-row items-center md:items-end justify-between gap-8 md:gap-12">
                             <div class="w-full md:w-3/4 text-center md:text-left">
-                                <h1 id="typewriter" class="font-black text-7xl sm:text-8xl md:text-[10rem] text-white uppercase tracking-tighter leading-none">
+                                <h1 id="typewriter" class="font-black text-6xl sm:text-8xl md:text-[10rem] text-white uppercase tracking-tighter leading-[0.9]">
                                     </h1>
                             </div>
-                            <div class="w-full md:w-1/4 md:mb-2 text-center md:text-left">
-                                <p id="hero-bio" class="text-xl md:text-2xl text-gray-400">
-                                    I’m a graphic designer passionate about creating visuals that communicate and captivate.
+                            <div class="w-full md:w-1/4 md:mb-6 text-center md:text-left">
+                                <p id="hero-bio" class="text-xl md:text-2xl" style="color: #888888;">
+                                    I’m a graphic designer passionate about creating visuals that
+                                    <span id="flip-word-container" class="flip-word-container" style="color: white;"></span>
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <div class="absolute bottom-0 left-0 right-0 w-full text-center pb-16 z-10">
-                        <a href="#work" class="inline-flex flex-col items-center text-white opacity-75 hover:opacity-100 transition-opacity">
-                            <span class="mb-2">Explore my work</span>
-                            <div class="animate-bounce-slow">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    <div class="absolute bottom-12 left-1/2 -translate-x-1/2 z-10">
+                        <a href="#work" class="group relative flex items-center justify-center w-24 h-24 sm:w-32 sm:h-32 rounded-full border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all duration-500 backdrop-blur-[2px]">
+                             <!-- Rotating Text -->
+                            <svg class="absolute inset-0 w-full h-full animate-spin-slow opacity-70 group-hover:opacity-100 transition-opacity duration-300" viewBox="0 0 100 100" style="overflow: visible;">
+                                <path id="curve" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent" />
+                                <text class="text-[10.5px] uppercase font-bold tracking-[2.5px] fill-white" dominant-baseline="middle" text-anchor="middle">
+                                    <textPath href="#curve" startOffset="50%">
+                                         WORKS • WORKS • WORKS • WORKS •
+                                    </textPath>
+                                </text>
+                            </svg>
+                            <!-- Arrow Icon -->
+                            <div class="text-white transform transition-transform duration-300 group-hover:translate-y-1">
+                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
                                 </svg>
                             </div>
                         </a>
@@ -222,15 +318,24 @@
             <section id="work">
                 <div class="project-section color-trigger-section" data-project-id="0" data-bg-color="#465d2f">
                     <div class="container mx-auto px-6">
-                        <div class="flex flex-col md:flex-row items-center gap-8 text-white">
-                            <div class="w-full md:w-1/4 space-y-2 text-center md:text-left" data-aos="fade-right">
-                                <h3 class="text-4xl font-bold">Kaapi District</h3>
-                                <p class="text-sm">Role: Art direction, Design, Web design</p>
-                                <p class="text-sm">Year: 2022</p>
+                        <div class="flex flex-col md:flex-row items-center gap-12 text-white">
+                            <div class="w-full md:w-1/3 space-y-4 text-center md:text-left" data-aos="fade-right">
+                                <h3 class="text-5xl font-black leading-tight">Kaapi District</h3>
+                                <div class="space-y-1 text-gray-300">
+                                    <p class="text-sm uppercase tracking-wider opacity-70 font-bold">Role</p>
+                                    <!-- Lorem Ipsum for Role -->
+                                    <p class="text-lg">Lorem ipsum dolor sit</p>
+                                </div>
+                                <div class="space-y-1 text-gray-300">
+                                    <p class="text-sm uppercase tracking-wider opacity-70 font-bold">Year</p>
+                                    <!-- Lorem Ipsum for Year -->
+                                    <p class="text-lg">Lorem Ipsum</p>
+                                </div>
                             </div>
-                            <div class="w-full md:w-3/4 mt-8 md:mt-0" data-aos="fade-left" data-aos-delay="200">
-                                <div class="tilted-card-figure">
+                            <div class="w-full md:w-2/3 mt-8 md:mt-0" data-aos="fade-left" data-aos-delay="200">
+                                <div class="tilted-card-figure group">
                                     <div class="tilted-card-inner">
+                                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity z-10 rounded-lg"></div>
                                         <img src="images/kaapi_homepage.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/465d2f/FFFFFF?text=Project+Image';" alt="Kaapi District Homepage" class="w-full h-full object-cover rounded-lg shadow-2xl">
                                     </div>
                                 </div>
@@ -240,38 +345,25 @@
                 </div>
                 <div class="project-section color-trigger-section" data-project-id="1" data-bg-color="#394b72">
                     <div class="container mx-auto px-6">
-                        <div class="flex flex-col md:flex-row items-center gap-8 text-white">
-                            <div class="w-full md:w-1/4 space-y-2 text-center md:text-left" data-aos="fade-right">
-                                <h3 class="text-4xl font-bold">Client: Northern Escape</h3>
-                                <p class="text-sm">Project: Air Max Campaign</p>
-                                <p class="text-sm">Role: Art Direction / Branding</p>
-                                <p class="text-sm">Agency: In-house</p>
-                                <p class="text-sm">Year: 2023</p>
-                            </div>
-                            <div class="w-full md:w-3/4 mt-8 md:mt-0" data-aos="fade-left" data-aos-delay="200">
-                                <div class="tilted-card-figure">
-                                    <div class="tilted-card-inner">
-                                        <img src="images/northern-escape.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/394b72/FFFFFF?text=Project+Image';" alt="Northern Escape preview" class="w-full h-full object-contain rounded-lg shadow-2xl">
-                                    </div>
+                         <div class="flex flex-col md:flex-row items-center gap-12 text-white">
+                            <div class="w-full md:w-1/3 space-y-4 text-center md:text-left" data-aos="fade-right">
+                                <h3 class="text-5xl font-black leading-tight">Northern Escape</h3>
+                                <div class="space-y-1 text-gray-300">
+                                    <p class="text-sm uppercase tracking-wider opacity-70 font-bold">Project</p>
+                                    <!-- Lorem Ipsum for Project -->
+                                    <p class="text-lg">Lorem ipsum dolor</p>
+                                </div>
+                                <div class="space-y-1 text-gray-300">
+                                    <p class="text-sm uppercase tracking-wider opacity-70 font-bold">Agency</p>
+                                    <!-- Lorem Ipsum for Agency -->
+                                    <p class="text-lg">Lorem ipsum</p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-section color-trigger-section" data-project-id="2" data-bg-color="#EC4899">
-                    <div class="container mx-auto px-6">
-                        <div class="flex flex-col md:flex-row items-center gap-8 text-white">
-                            <div class="w-full md:w-1/4 space-y-2 text-center md:text-left" data-aos="fade-right">
-                                <h3 class="text-4xl font-bold">Client: Spotify</h3>
-                                <p class="text-sm">Project: Wrapped 2023</p>
-                                <p class="text-sm">Role: Illustration / Motion Design</p>
-                                <p class="text-sm">Agency: COLLINS</p>
-                                <p class="text-sm">Year: 2023</p>
-                            </div>
-                            <div class="w-full md:w-3/4 mt-8 md:mt-0" data-aos="fade-left" data-aos-delay="200">
-                                <div class="tilted-card-figure">
+                            <div class="w-full md:w-2/3 mt-8 md:mt-0" data-aos="fade-left" data-aos-delay="200">
+                                <div class="tilted-card-figure group">
                                     <div class="tilted-card-inner">
-                                        <img src="https://images.unsplash.com/photo-1507208773393-40d9fc670c58?q=80&w=1200&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/EC4899/FFFFFF?text=Project+Image';" alt="Colorful abstract light trails" class="w-full h-full object-cover rounded-lg shadow-2xl">
+                                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity z-10 rounded-lg"></div>
+                                        <img src="images/northern-escape.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/394b72/FFFFFF?text=Project+Image';" alt="Northern Escape preview" class="w-full h-full object-contain rounded-lg shadow-2xl">
                                     </div>
                                 </div>
                             </div>
@@ -284,28 +376,30 @@
                 <div class="container mx-auto px-6">
                     <div class="flex flex-col md:flex-row items-center gap-12">
                         <div class="w-full md:w-1/2" data-aos="fade-up" data-aos-delay="200">
-                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/800x1000/1F2937/FFFFFF?text=Your+Photo';" alt="Professional portrait of Nirmal" class="rounded-lg shadow-2xl w-full" loading="lazy">
+                           <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/800x1000/1F2937/FFFFFF?text=Your+Photo';" alt="Professional portrait of Nirmal" class="rounded-lg shadow-2xl w-full grayscale hover:grayscale-0 transition-all duration-700" loading="lazy">
                         </div>
-                        <div class="w-full md:w-1/2 space-y-8 mt-12 md:mt-0" data-aos="fade-up">
+                        <div class="w-full md:w-1/2 space-y-12 mt-12 md:mt-0" data-aos="fade-up">
                             <div>
-                                <h4 class="font-semibold text-gray-400 mb-2">About</h4>
-                                <p class="text-gray-300 leading-relaxed">I'm Nirmal. Multi-disciplinary designer based in Dubai. Currently designing beautiful experiences at Google. When I'm not designing stuff you can catch me watching my son's soccer practice, playing Magic: The Gathering, or being disappointed with the Washington Commanders.</p>
+                                <h4 class="font-bold text-3xl mb-4 text-white">About</h4>
+                                <p class="text-gray-400 text-lg leading-relaxed">I'm Nirmal. Multi-disciplinary designer based in Dubai. Currently designing beautiful experiences at Google. When I'm not designing stuff you can catch me watching my son's soccer practice, playing Magic: The Gathering, or being disappointed with the Washington Commanders.</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-gray-400 mb-2">Current</h4>
-                                <p class="text-gray-300">Staff Visual Designer at Google</p>
+                                <h4 class="font-bold text-3xl mb-4 text-white">Current</h4>
+                                <!-- Lorem Ipsum for Current -->
+                                <p class="text-gray-300 text-lg">Lorem ipsum dolor sit amet</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-gray-400 mb-2">Previous</h4>
-                                <ul class="text-gray-300 space-y-1">
-                                    <li>Senior Designer at Grow</li>
-                                    <li>Art Direction at Ciniva Web Agency</li>
-                                    <li>Art Direction & Design at Leesa Sleep</li>
-                                    <li>Design at Intercom</li>
+                                <h4 class="font-bold text-3xl mb-4 text-white">Previous</h4>
+                                <!-- Lorem Ipsum for Previous List -->
+                                <ul class="text-gray-400 space-y-2 text-lg">
+                                    <li>Lorem ipsum dolor</li>
+                                    <li>Sit amet consectetur</li>
+                                    <li>Adipiscing elit</li>
+                                    <li>Sed do eiusmod</li>
                                 </ul>
                             </div>
                              <div class="pt-4">
-                                <a href="#contact" class="inline-block bg-white text-black font-semibold px-8 py-3 rounded-full hover:bg-gray-200 transition-colors">Say Hello</a>
+                                <a href="#contact" class="inline-block bg-white text-black font-bold uppercase tracking-wider px-10 py-4 rounded-full hover:bg-gray-200 transition-transform hover:scale-105">Say Hello</a>
                             </div>
                         </div>
                     </div>
@@ -314,8 +408,8 @@
 
             <section id="contact" class="color-trigger-section py-20" data-bg-color="#111111">
                 <div class="container mx-auto px-6 text-center" data-aos="zoom-in">
-                    <h2 class="text-4xl sm:text-5xl md:text-7xl font-bold text-white">Let's work together.</h2>
-                    <p class="mt-4 text-xl sm:text-2xl text-gray-400 hover:text-indigo-400 transition-colors"><a href="mailto:hello@nirmal.com">hello@nirmal.com</a></p>
+                    <h2 class="text-4xl sm:text-6xl md:text-8xl font-black text-white leading-none">Let's work<br>together.</h2>
+                    <p class="mt-8 text-xl sm:text-2xl text-gray-400 hover:text-white transition-colors border-b-2 border-gray-700 hover:border-white inline-block pb-2"><a href="mailto:hello@nirmal.com">hello@nirmal.com</a></p>
                 </div>
             </section>
         </main>
@@ -323,11 +417,11 @@
         <footer class="bg-black text-white">
             <div class="container mx-auto px-6 py-12">
                 <div class="flex flex-col md:flex-row items-center justify-between">
-                    <p class="text-xl text-gray-400">&copy; 2025 Nirmal</p>
-                    <div class="flex mt-4 md:mt-0 space-x-6 text-xl">
-                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">Twitter</a>
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">Instagram</a>
-                        <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">Dribbble</a>
+                    <p class="text-lg text-gray-500 font-bold">&copy; <span id="current-year"></span> Nirmal</p>
+                    <div class="flex mt-4 md:mt-0 space-x-8 text-lg">
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors">Twitter</a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors">Instagram</a>
+                        <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors">Dribbble</a>
                     </div>
                 </div>
             </div>
@@ -338,9 +432,16 @@
         <header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
             <div class="container mx-auto px-6 py-4">
                 <div class="flex items-center justify-between">
-                    <a href="#hero" id="project-back-link" class="text-2xl font-bold text-white">N.</a>
-                    <button id="close-project-button" class="text-white">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <a href="#" id="project-back-link" class="text-white hover:opacity-75 transition-opacity">
+                        <svg id="project-detail-logo" class="w-10 h-10 transition-transform duration-200 ease-out" data-bbox="5 10.21 272.38 392.93" viewBox="5 10.21 272.38 392.93" xmlns="http://www.w3.org/2000/svg" data-type="ugc">
+                            <g>
+                                <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="15" d="M5 21.53v381.61l194.89-178.66-139.48-45.96 43.16-33.49L5 21.53z"/>
+                                <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="15" d="M277.38 10.21 60.41 178.52l139.48 45.96-32.3 29.61 109.79 145.17V10.21z"/>
+                            </g>
+                        </svg>
+                    </a>
+                    <button id="close-project-button" class="text-white hover:scale-110 transition-transform cursor-pointer pointer-events-auto">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
             </div>
@@ -362,14 +463,15 @@
                 project: 'Brand Identity & Web Design',
                 role: 'Art direction, Design, Web design',
                 agency: 'In-house',
-                year: 2022,
+                year: '2022',
                 description: 'Kaapi District\'s branding evokes South India\'s traditional roasting houses with a vintage wordmark. The carefully designed merchandise, like T-shirts, cups, and coffee bags, captures the brand\'s essence, telling a story that celebrates the rich heritage of South Indian coffee culture with a blend of tradition and modernity.',
                 bgColor: '#465d2f',
                 logoUrl: 'images/kaapi-logo.png',
-                mainImageUrl: 'images/kaapi-main-image.jpg',
+                mainImageUrl: 'images/kaapi_homepage.jpg',
                 detailImages: [
                     'images/kaapi-district-brand-guidelines.gif',
                     'images/Kaapi+District+website.png',
+                    'images/kaapi-packaging-mockup.jpg' 
                 ]
             },
             {
@@ -378,62 +480,100 @@
                 project: 'Air Max Campaign',
                 role: 'Art Direction / Branding',
                 agency: 'In-house',
-                year: 2023,
+                year: '2023',
                 description: 'A global campaign for the launch of the new Air Max silhouette. We developed the core creative concept, directed the photoshoot, and produced a series of digital and physical assets that were deployed across all of Nike\'s major markets, resulting in a record-breaking launch week.',
                 bgColor: '#394b72',
                 logoUrl: 'images/northern-escape-logo.png',
-                mainImageUrl: 'images/northern-escape-main.jpg',
-                detailImages: []
-            },
-            {
-                id: 2,
-                client: 'Spotify',
-                project: 'Wrapped 2023',
-                role: 'Illustration / Motion Design',
-                agency: 'COLLINS',
-                year: 2023,
-                description: 'Tasked with visualizing the data of millions of users for Spotify\'s annual "Wrapped" campaign. We created a vibrant and dynamic design system, including a custom set of illustrations and motion graphics, to bring each user\'s personal listening story to life in a unique and shareable way.',
-                bgColor: '#EC4899',
-                logoUrl: 'images/spotify-logo.png',
-                mainImageUrl: 'images/spotify-wrapped-main.jpg',
+                mainImageUrl: 'images/northern-escape.jpg',
                 detailImages: [
-                    'https://placehold.co/800x1200/EC4899/FFFFFF?text=Image+1',
-                    'https://placehold.co/1200x800/EC4899/FFFFFF?text=Image+2',
-                    'https://placehold.co/1200x800/EC4899/FFFFFF?text=Image+3',
+                    'images/northern-escape-billboard.jpg',
+                    'images/northern-escape-social.jpg',
+                    'images/northern-escape-app.jpg'
                 ]
             }
         ];
 
-        let showProjectPage;
-        let detailPageObserver; 
-
-        function navigateToProject(projectId) {
-            const detailView = document.getElementById('project-detail-view');
-            detailView.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            setTimeout(() => {
-                if (showProjectPage) {
-                    showProjectPage(projectId);
-                }
-            }, 300);
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
+            // State Variables
+            let isHeroVisible = true;
+            let isContactVisible = false;
+            let detailPageObserver; 
+
+            // Initialize Year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Preloader Logic
+            const preloader = document.getElementById('preloader');
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    preloader.classList.add('loaded');
+                }, 1000); 
+            });
+            setTimeout(() => { preloader.classList.add('loaded'); }, 3000); // Fallback
+
             AOS.init({
-                duration: 800,
+                duration: 1000, 
                 once: true,
+                easing: 'ease-out-cubic'
             });
 
+            // Element References
             const homePage = document.getElementById('home-page');
             const projectDetailPage = document.getElementById('project-detail-view');
             const projectContent = document.getElementById('project-content');
-            const projectClickableSections = document.querySelectorAll('.project-section');
             const closeButton = document.getElementById('close-project-button');
             const projectBackLink = document.getElementById('project-back-link');
             const glassCursor = document.getElementById('glass-cursor');
             const body = document.body;
+            const colorSections = document.querySelectorAll('.color-trigger-section');
+            const curtain = document.getElementById('transition-curtain');
 
-            showProjectPage = (projectId) => {
+            // --- Animation Helper: Curtain Transition ---
+            async function runPageTransition(callback) {
+                document.documentElement.classList.remove('scroll-smooth');
+                curtain.classList.remove('exit');
+                curtain.classList.add('active');
+                
+                await new Promise(r => setTimeout(r, 600));
+                callback();
+                
+                setTimeout(() => {
+                    document.documentElement.classList.add('scroll-smooth');
+                }, 50);
+
+                await new Promise(r => setTimeout(r, 100));
+                curtain.classList.add('exit');
+                curtain.classList.remove('active');
+            }
+
+            // --- Navigation Logic ---
+            function showHomePage() {
+                runPageTransition(() => {
+                    if (detailPageObserver) {
+                        detailPageObserver.disconnect();
+                    }
+                    projectDetailPage.classList.add('hidden');
+                    homePage.classList.remove('hidden');
+                    
+                    // Clear hash or reset state
+                    history.pushState("", document.title, window.location.pathname + window.location.search);
+                    
+                    // Reset to hero color or visible section color
+                    const visibleSection = Array.from(colorSections).find(section => {
+                        const rect = section.getBoundingClientRect();
+                        return rect.top >= 0 && rect.top <= window.innerHeight / 2;
+                    }) || document.getElementById('hero');
+                    
+                    if(visibleSection) {
+                        body.style.backgroundColor = visibleSection.dataset.bgColor;
+                    }
+                    // Reset rotation
+                    const mainLogo = document.getElementById('main-logo');
+                    if(mainLogo) mainLogo.style.transform = 'rotate(0deg)';
+                });
+            };
+
+            const showProjectPage = (projectId) => {
                 const project = projects.find(p => p.id == projectId);
                 if (!project) return;
                 
@@ -441,52 +581,47 @@
                 const nextProjectId = projects[(currentIndex + 1) % projects.length].id;
                 const prevProjectId = projects[(currentIndex - 1 + projects.length) % projects.length].id;
 
+                // Extract hex color without hash for placeholder API
+                const placeHolderColor = project.bgColor.substring(1); 
+
                 const imagesHTML = project.detailImages.map(imgSrc => `
                     <div data-aos="fade-up" data-aos-delay="100">
-                        <img src="${imgSrc}" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Image+Not+Found';" alt="${project.project} detail image" class="rounded-lg w-full">
+                        <img src="${imgSrc}" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/${placeHolderColor}/FFFFFF?text=Project+Detail';" alt="${project.project} detail image" class="rounded-lg w-full shadow-lg">
                     </div>
                 `).join('');
 
                 projectContent.innerHTML = `
                     <div id="project-info-section" class="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-8">
-                        <div data-aos="fade-up" class="max-w-3xl">
-                             <img src="${project.logoUrl}" onerror="this.onerror=null;this.src='https://placehold.co/200x200/FFFFFF/000000?text=Logo';" alt="${project.client} Logo" class="h-48 w-auto mx-auto mb-8" data-aos="fade-down">
-                            <p class="text-xl md:text-2xl leading-relaxed text-white">${project.description}</p>
-                            <div class="mt-8 text-base text-white pt-4">
-                                <p><span class="font-semibold">Client:</span> ${project.client}</p>
-                                <p><span class="font-semibold">Project:</span> ${project.project}</p>
-                                <p><span class="font-semibold">Role:</span> ${project.role}</p>
-                                <p><span class="font-semibold">Agency:</span> ${project.agency}</p>
-                                <p><span class="font-semibold">Year:</span> ${project.year}</p>
+                        <div data-aos="fade-up" class="max-w-4xl">
+                             <img src="${project.logoUrl}" onerror="this.onerror=null;this.src='https://placehold.co/200x200/${placeHolderColor}/FFFFFF?text=Logo';" alt="${project.client} Logo" class="h-48 w-auto mx-auto mb-12" data-aos="fade-down">
+                             <h2 class="text-5xl md:text-7xl font-black mb-8 leading-tight uppercase">${project.client}</h2>
+                            <p class="text-xl md:text-2xl leading-relaxed text-gray-200 font-light">${project.description}</p>
+                            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-left border-t border-white/20 pt-8">
+                                <div><p class="text-sm text-gray-400 uppercase tracking-widest mb-2 font-bold">Client</p><p class="font-bold text-lg">${project.client}</p></div>
+                                <div><p class="text-sm text-gray-400 uppercase tracking-widest mb-2 font-bold">Project</p><p class="font-bold text-lg">${project.project}</p></div>
+                                <div><p class="text-sm text-gray-400 uppercase tracking-widest mb-2 font-bold">Role</p><p class="font-bold text-lg">${project.role}</p></div>
+                                <div><p class="text-sm text-gray-400 uppercase tracking-widest mb-2 font-bold">Year</p><p class="font-bold text-lg">${project.year}</p></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="py-16 md:py-24" data-aos="fade-up">
-                        <img src="${project.mainImageUrl}" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/FFFFFF/000000?text=Project+Image';" alt="Project main image" class="rounded-lg w-full">
+                        <img src="${project.mainImageUrl}" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/${placeHolderColor}/FFFFFF?text=Main+Project+Image';" alt="Project main image" class="rounded-lg w-full shadow-2xl">
                     </div>
 
-                    <div class="pb-16 md:pb-24 space-y-8 md:space-y-12">
+                    <div class="pb-16 md:pb-24 space-y-8 md:space-y-12 max-w-5xl mx-auto">
                         ${imagesHTML}
                     </div>
 
-                    <nav id="project-nav" class="py-12 flex justify-between items-center text-white">
-                        <a href="#" onclick="event.preventDefault(); navigateToProject(${prevProjectId})" class="group relative w-48 h-20 flex items-center justify-start text-left">
-                            <span class="transition-all duration-300 group-hover:opacity-0 group-hover:translate-x-4">
-                                <span class="text-3xl md:text-4xl font-black uppercase leading-none">Previous<br>Project</span>
-                            </span>
-                            <span class="absolute left-0 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                            </span>
+                    <nav id="project-nav" class="py-24 flex justify-between items-center text-white border-t border-white/10 mt-12">
+                        <a href="#" onclick="event.preventDefault(); window.navigateToProject(${prevProjectId})" class="group relative flex flex-col items-start text-left pl-8 cursor-pointer">
+                            <span class="text-xs uppercase tracking-widest text-gray-400 mb-2 group-hover:text-white transition-colors font-bold">Previous Project</span>
+                            <span class="text-3xl md:text-5xl font-black font-display uppercase leading-none group-hover:translate-x-2 transition-transform duration-300">Previous</span>
                         </a>
 
-                        <a href="#" onclick="event.preventDefault(); navigateToProject(${nextProjectId})" class="group relative w-48 h-20 flex items-center justify-end text-right">
-                             <span class="transition-all duration-300 group-hover:opacity-0 group-hover:-translate-x-4">
-                                <span class="text-3xl md:text-4xl font-black uppercase leading-none">Next<br>Project</span>
-                            </span>
-                            <span class="absolute right-0 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                            </span>
+                        <a href="#" onclick="event.preventDefault(); window.navigateToProject(${nextProjectId})" class="group relative flex flex-col items-end text-right pr-8 cursor-pointer">
+                             <span class="text-xs uppercase tracking-widest text-gray-400 mb-2 group-hover:text-white transition-colors font-bold">Next Project</span>
+                            <span class="text-3xl md:text-5xl font-black font-display uppercase leading-none group-hover:-translate-x-2 transition-transform duration-300">Next</span>
                         </a>
                     </nav>
                 `;
@@ -506,13 +641,13 @@
                 const observerOptions = {
                     root: projectDetailPage, 
                     rootMargin: '0px',
-                    threshold: 0.4 
+                    threshold: 0.1
                 };
                 
                 detailPageObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            body.style.backgroundColor = '#111111';
+                            body.style.backgroundColor = '#111111'; // Footer/Nav color
                         } else {
                             body.style.backgroundColor = project.bgColor;
                         }
@@ -524,95 +659,50 @@
                 }
             };
 
-            const showHomePage = () => {
-                if (detailPageObserver) {
-                    detailPageObserver.disconnect();
-                }
-                projectDetailPage.classList.add('hidden');
-                homePage.classList.remove('hidden');
-                history.pushState("", document.title, window.location.pathname + window.location.search);
-                
-                const visibleSection = Array.from(colorSections).find(section => {
-                    const rect = section.getBoundingClientRect();
-                    return rect.top >= 0 && rect.top <= window.innerHeight / 2;
-                }) || document.getElementById('hero');
-                
-                body.style.backgroundColor = visibleSection.dataset.bgColor;
+            // EXPOSE TO GLOBAL SCOPE FOR INLINE HTML HANDLERS
+            window.navigateToProject = (projectId) => {
+                runPageTransition(() => {
+                    const detailView = document.getElementById('project-detail-view');
+                    detailView.scrollTo(0,0);
+                    showProjectPage(projectId);
+                });
             };
             
+            // Listeners for Cards (Home)
             document.querySelectorAll('.tilted-card-figure').forEach(figure => {
                 figure.addEventListener('click', () => {
                     const projectSection = figure.closest('.project-section');
                     if (projectSection) {
                         const projectId = projectSection.dataset.projectId;
-                        showProjectPage(projectId);
+                        window.navigateToProject(projectId);
                     }
                 });
             });
 
-
-            closeButton.addEventListener('click', showHomePage);
+            closeButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                showHomePage();
+            });
+            
             projectBackLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 showHomePage();
             });
 
+            // Initial Load Handler
             const handleInitialLoad = () => {
                 const hash = window.location.hash;
                 if (hash.startsWith('#project-')) {
                     const projectId = hash.replace('#project-', '');
-                    setTimeout(() => showProjectPage(projectId), 100);
+                    setTimeout(() => showProjectPage(projectId), 500);
                 }
             };
             handleInitialLoad();
 
-            const colorSections = document.querySelectorAll('.color-trigger-section');
-            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.55 };
-            const colorObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !homePage.classList.contains('hidden')) {
-                        const newColor = entry.target.dataset.bgColor;
-                        body.style.backgroundColor = newColor;
-                    }
-                });
-            }, observerOptions);
-            colorSections.forEach(section => { colorObserver.observe(section); });
-
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-
-            mobileMenuButton.addEventListener('click', (e) => {
-                e.stopPropagation();
-                mobileMenu.classList.toggle('hidden');
-                const isHidden = mobileMenu.classList.contains('hidden');
-                mobileMenuButton.setAttribute('aria-label', isHidden ? 'Open navigation menu' : 'Close navigation menu');
-                mobileMenuButton.innerHTML = isHidden
-                    ? `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>`
-                    : `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
-            });
-
-            mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                    mobileMenuButton.setAttribute('aria-label', 'Open navigation menu');
-                    mobileMenuButton.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>`;
-                });
-            });
-
-            document.querySelectorAll('#home-page a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetElement = document.querySelector(this.getAttribute('href'));
-                    if (targetElement) {
-                         targetElement.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
-
+            // Typewriter Effect
             const typewriterElement = document.getElementById('typewriter');
             const bioParagraph = document.getElementById('hero-bio');
-            const linesToType = ["Hi, Im", "Nirmal."];
+            const linesToType = ["Hi, I'm", "Nirmal."];
             typewriterElement.textContent = '';
             bioParagraph.style.opacity = '0';
             bioParagraph.style.transition = 'opacity 0.5s ease-in-out 0.3s';
@@ -640,20 +730,19 @@
                     setTimeout(type, 300);
                 }
             }
-            setTimeout(type, 500);
+            setTimeout(type, 1500);
 
+            // Background Canvas
             const canvas = document.getElementById('motion-background');
             const ctx = canvas.getContext('2d');
             let time = 0;
             let grid = [];
             const gridSize = 25;
             const mouse = { x: undefined, y: undefined, radius: 100 };
-            
-            let isHeroVisible = true;
-            let isContactVisible = false;
 
             window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
             window.addEventListener('mouseout', () => { mouse.x = undefined; mouse.y = undefined; });
+            
             function resizeCanvas() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
@@ -669,28 +758,6 @@
             }
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
-
-            const heroSection = document.getElementById('hero');
-            const contactSection = document.getElementById('contact');
-
-            const sectionObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.target.id === 'hero') {
-                        isHeroVisible = entry.isIntersecting;
-                    }
-                    if (entry.target.id === 'contact') {
-                        isContactVisible = entry.isIntersecting;
-                    }
-                });
-            }, { threshold: 0.1 }); 
-
-            if (heroSection) {
-                sectionObserver.observe(heroSection);
-            }
-            if (contactSection) {
-                sectionObserver.observe(contactSection);
-            }
-
 
             function animate() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -754,38 +821,165 @@
             }
             animate();
 
+            // Glass Cursor Logic
             window.addEventListener('mousemove', (e) => {
                 glassCursor.style.top = e.clientY + 'px';
                 glassCursor.style.left = e.clientX + 'px';
             });
-            const interactiveElements = document.querySelectorAll('a, button, .project-section');
+            const interactiveElements = document.querySelectorAll('a, button, .project-section, .tilted-card-figure');
             interactiveElements.forEach(el => {
                 el.addEventListener('mouseenter', () => glassCursor.classList.add('hover'));
                 el.addEventListener('mouseleave', () => glassCursor.classList.remove('hover'));
             });
 
-            const tiltedCards = document.querySelectorAll('.tilted-card-figure');
-
-            tiltedCards.forEach(card => {
-                const innerCard = card.querySelector('.tilted-card-inner');
-                const rotateAmplitude = 12;
-                const scaleOnHover = 1.05;
-
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const offsetX = e.clientX - rect.left - rect.width / 2;
-                    const offsetY = e.clientY - rect.top - rect.height / 2;
-
-                    const rotationX = (offsetY / (rect.height / 2)) * -rotateAmplitude;
-                    const rotationY = (offsetX / (rect.width / 2)) * rotateAmplitude;
-                    
-                    innerCard.style.transition = 'transform 0.05s linear';
-                    innerCard.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) scale(${scaleOnHover})`;
+            // Color Transition Logic
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.55 };
+            const colorObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !homePage.classList.contains('hidden')) {
+                        const newColor = entry.target.dataset.bgColor;
+                        if (newColor) {
+                            body.style.backgroundColor = newColor;
+                        }
+                    }
                 });
+            }, observerOptions);
+            
+            colorSections.forEach(section => { 
+                colorObserver.observe(section); 
+            });
 
-                card.addEventListener('mouseleave', () => {
-                    innerCard.style.transition = 'transform 0.4s ease-out';
-                    innerCard.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+            // Visibility tracking for canvas effect
+            const heroSection = document.getElementById('hero');
+            const contactSection = document.getElementById('contact');
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.target.id === 'hero') {
+                        isHeroVisible = entry.isIntersecting;
+                    }
+                    if (entry.target.id === 'contact') {
+                        isContactVisible = entry.isIntersecting;
+                    }
+                });
+            }, { threshold: 0.1 }); 
+
+            if (heroSection) {
+                sectionObserver.observe(heroSection);
+            }
+            if (contactSection) {
+                sectionObserver.observe(contactSection);
+            }
+
+            // Flip Words Logic
+            const flipContainer = document.getElementById('flip-word-container');
+            const words = ["communicate", "captivate", "inspire", "engage", "tell stories"];
+            let currentWordIndex = 0;
+            const duration = 3000;
+
+            function flipWords() {
+                const currentWordSpan = flipContainer.querySelector('.flip-word');
+                if (currentWordSpan) {
+                    currentWordSpan.classList.add('exiting');
+                }
+
+                setTimeout(() => {
+                    if(currentWordSpan) {
+                        currentWordSpan.remove();
+                    }
+                    
+                    currentWordIndex = (currentWordIndex + 1) % words.length;
+                    const nextWord = words[currentWordIndex];
+                    
+                    const newWordSpan = document.createElement('span');
+                    newWordSpan.textContent = nextWord;
+                    newWordSpan.className = 'flip-word';
+                    flipContainer.appendChild(newWordSpan);
+
+                    setTimeout(() => {
+                        newWordSpan.classList.add('active');
+                    }, 50);
+
+                    setTimeout(flipWords, duration);
+                }, 300);
+            }
+
+            // Initial setup for flip words
+            const initialWordSpan = document.createElement('span');
+            initialWordSpan.textContent = words[0];
+            initialWordSpan.className = 'flip-word active';
+            flipContainer.appendChild(initialWordSpan);
+            setTimeout(flipWords, duration);
+            
+            // Logo Rotation Logic
+            const mainLogo = document.getElementById('main-logo');
+            const projectDetailLogo = document.getElementById('project-detail-logo');
+            
+            let mainPageLastScrollY = window.scrollY;
+            let detailPageLastScrollY = 0;
+            let rotationAngle = 0;
+            const rotationSpeed = 5;
+
+            // Handler for the main home page
+            window.addEventListener('scroll', () => {
+                if(isContactVisible) {
+                    if (mainLogo) mainLogo.style.transform = `rotate(0deg)`;
+                    rotationAngle = 0; 
+                    return; 
+                }
+
+                const currentScrollY = window.scrollY;
+                if (currentScrollY > mainPageLastScrollY) {
+                    rotationAngle += rotationSpeed;
+                } else {
+                    rotationAngle -= rotationSpeed;
+                }
+                if (mainLogo) mainLogo.style.transform = `rotate(${rotationAngle}deg)`;
+                mainPageLastScrollY = currentScrollY;
+            });
+
+            // Handler for the project detail page
+            projectDetailPage.addEventListener('scroll', () => {
+                const currentScrollY = projectDetailPage.scrollTop;
+                 if (currentScrollY > detailPageLastScrollY) {
+                    rotationAngle += rotationSpeed;
+                } else {
+                    rotationAngle -= rotationSpeed;
+                }
+                if (projectDetailLogo) projectDetailLogo.style.transform = `rotate(${rotationAngle}deg)`;
+                detailPageLastScrollY = currentScrollY;
+            });
+
+            // Mobile Menu
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+            mobileMenuButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                mobileMenu.classList.toggle('hidden');
+                const isHidden = mobileMenu.classList.contains('hidden');
+                mobileMenuButton.setAttribute('aria-label', isHidden ? 'Open navigation menu' : 'Close navigation menu');
+                mobileMenuButton.innerHTML = isHidden
+                    ? `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>`
+                    : `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+            });
+
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-label', 'Open navigation menu');
+                    mobileMenuButton.innerHTML = `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>`;
+                });
+            });
+
+            document.querySelectorAll('#home-page a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if (targetElement) {
+                         targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
                 });
             });
 
